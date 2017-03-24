@@ -1,0 +1,8 @@
+<h1 md-dialog-title>Add Daily Task</h1>
+<div md-dialog-content>Lorem Ipsum</div>
+<div md-dialog-actions>
+    <md-input-container>
+        <input mdInput placeholder="New Task" type="text" name="taskTitle" [(ngModel)]="taskTitle">
+    </md-input-container>
+    <button md-button (click)="dialogRef.close(taskTitle)">Add Task</button>
+</div>
