@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MdDialog, MdDialogRef} from '@angular/material';
+import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 
 import { DailyTask } from '../daily-task';
 
@@ -12,6 +12,7 @@ import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dia
     styleUrls: ['./daily-tasks-list.component.css']
 })
 export class DailyTasksListComponent implements OnInit {
+    isNewTask: boolean = true;
     tasks: DailyTask[] = [];
     taskTitle: string;
 
@@ -22,8 +23,11 @@ export class DailyTasksListComponent implements OnInit {
         this.tasks = this._dailyTasksDataService.getDailyTasks();
     }
 
-    openDailyTaskDialog() {
-        let dialogRef = this.dialog.open(DailyTasksDialogComponent);
+    openNewDailyTaskDialog() {
+        let config = new MdDialogConfig();
+        config.data = {"isNewTask": true};
+
+        let dialogRef = this.dialog.open(DailyTasksDialogComponent, config); 
         dialogRef.afterClosed().subscribe(result => {
             this.taskTitle = result;
             let newTask = new DailyTask({title: this.taskTitle, complete: false});

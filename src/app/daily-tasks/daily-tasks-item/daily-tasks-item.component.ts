@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 
 import { DailyTasksDataService } from '../shared/daily-tasks-data.service'
+import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dialog.component'
 
 import { DailyTask } from '../daily-task';
 
@@ -11,8 +13,9 @@ import { DailyTask } from '../daily-task';
 })
 export class DailyTasksItemComponent implements OnInit {
     @Input() dailyTask: DailyTask;
+    taskTitle: string;
 
-    constructor(private _dailyTasksDataService: DailyTasksDataService) { }
+    constructor(private _dailyTasksDataService: DailyTasksDataService, public dialog: MdDialog) { }
 
     ngOnInit() { }
 
@@ -24,4 +27,15 @@ export class DailyTasksItemComponent implements OnInit {
         this._dailyTasksDataService.removeDailyTask(dailyTaskId);
     }
 
+    openEditDailyTaskDialog(dailyTaskId: number) {
+        let config = new MdDialogConfig();
+        config.data = {"isNewTask": false, "taskId": dailyTaskId};
+
+        let dialogRef = this.dialog.open(DailyTasksDialogComponent, config); 
+        dialogRef.afterClosed().subscribe(result => {
+            this.taskTitle = result;
+            let updatedTask = new DailyTask({title: this.taskTitle, complete: false});
+            this._dailyTasksDataService.editDailyTask(dailyTaskId, updatedTask);
+        });
+    }
 }

@@ -33,6 +33,18 @@ export class DailyTasksDataService {
         this.dailyTasks.splice(dailyTaskIndex, 1);
     }
 
+    editDailyTask(dailyTaskId: number, updatedDailyTask: DailyTask) {
+        let dailyTaskIndex = this.findDailyTaskIndexById(dailyTaskId);
+        this.dailyTasks[dailyTaskIndex].title = updatedDailyTask.title;
+    }
+
+    getDailyTaskTitle(dailyTaskId: number): string {
+        let dailyTaskIndex = this.findDailyTaskIndexById(dailyTaskId);
+        let dailyTaskTitle = this.dailyTasks[dailyTaskIndex].title;
+
+        return dailyTaskTitle;
+    }
+
     getDailyTasksCount(): number {
         return this.dailyTasks.length;
     }

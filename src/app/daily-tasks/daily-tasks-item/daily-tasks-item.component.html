@@ -2,7 +2,9 @@
     <md-icon mat-list-avatar class="completionButton" *ngIf="!dailyTask.complete" (click)="changeTaskCompletion(dailyTask.id)">check_box_outline_blank</md-icon>
     <md-icon mat-list-avatar class="completionButton" *ngIf="dailyTask.complete" (click)="changeTaskCompletion(dailyTask.id)">check_box</md-icon>
 
-    <h4 md-line [ngClass]="{'taskComplete': dailyTask.complete, 'taskTitle': true}">{{ dailyTask.title }}</h4>
+    <h4 md-line [ngClass]="{'taskComplete': dailyTask.complete, 'taskTitle': true}" (click)=" openEditDailyTaskDialog(dailyTask.id)">
+        {{ dailyTask.title }}
+    </h4>
     <button color="accent" md-raised-button (click)="removeTask(dailyTask.id)">
         <span>Delete</span>
         <md-icon>clear</md-icon>
