@@ -28,10 +28,5 @@ export class DailyTasksListComponent implements OnInit {
         config.data = {"isNewTask": true};
 
         let dialogRef = this.dialog.open(DailyTasksDialogComponent, config); 
-        dialogRef.afterClosed().subscribe(result => {
-            this.taskTitle = result;
-            let newTask = new DailyTask({title: this.taskTitle, complete: false});
-            this._dailyTasksDataService.addDailyTask(newTask);
-        });
     }
 }

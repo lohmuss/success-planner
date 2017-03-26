@@ -23,19 +23,10 @@ export class DailyTasksItemComponent implements OnInit {
         this._dailyTasksDataService.changeDailyTaskCompletion(dailyTaskId);
     }
 
-    removeTask(dailyTaskId: number) {
-        this._dailyTasksDataService.removeDailyTask(dailyTaskId);
-    }
-
     openEditDailyTaskDialog(dailyTaskId: number) {
         let config = new MdDialogConfig();
         config.data = {"isNewTask": false, "taskId": dailyTaskId};
 
         let dialogRef = this.dialog.open(DailyTasksDialogComponent, config); 
-        dialogRef.afterClosed().subscribe(result => {
-            this.taskTitle = result;
-            let updatedTask = new DailyTask({title: this.taskTitle, complete: false});
-            this._dailyTasksDataService.editDailyTask(dailyTaskId, updatedTask);
-        });
     }
 }

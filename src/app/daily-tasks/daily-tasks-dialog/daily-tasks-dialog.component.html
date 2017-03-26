@@ -1,21 +1,24 @@
 <span *ngIf="data.isNewTask">
     <h1 md-dialog-title>Add Daily Task</h1>
-    <div md-dialog-content>Lorem Ipsum</div>
-    <div md-dialog-actions>
+    <div md-dialog-content>
         <md-input-container>
             <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
         </md-input-container>
-        <button md-button (click)="dialogRef.close(taskTitle)">Add Task</button>
+    </div>
+    <div md-dialog-actions>
+        <button md-raised-button color="primary" (click)="addTask()">Add</button>
     </div>
 </span>
 
 <span *ngIf="!data.isNewTask">
     <h1 md-dialog-title>Edit Daily Task</h1>
-    <div md-dialog-content>Lorem Ipsum</div>
-    <div md-dialog-actions>
-        <md-input-container>
+    <div md-dialog-content>
+         <md-input-container>
             <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
         </md-input-container>
-        <button md-button (click)="dialogRef.close(taskTitle)">Edit Task</button>
+    </div>
+    <div md-dialog-actions>
+        <button md-raised-button color="primary" (click)="editTask(data.taskId)">Edit</button>
+        <button md-raised-button color="warn" (click)="removeTask(data.taskId)">Delete</button>
     </div>
 </span>
