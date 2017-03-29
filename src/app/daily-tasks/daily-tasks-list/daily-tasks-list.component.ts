@@ -16,11 +16,13 @@ export class DailyTasksListComponent implements OnInit {
     tasks: DailyTask[] = [];
     taskTitle: string;
 
-    constructor(private _dailyTasksDataService: DailyTasksDataService, public dialog: MdDialog) { 
+    constructor(private _dailyTasksDataService: DailyTasksDataService, public dialog: MdDialog) {
     }
 
     ngOnInit() {
-        this.tasks = this._dailyTasksDataService.getDailyTasks();
+        this._dailyTasksDataService.subject.subscribe((tasks: DailyTask[]) => {
+            this.tasks = tasks;
+        });
     }
 
     openNewDailyTaskDialog() {
