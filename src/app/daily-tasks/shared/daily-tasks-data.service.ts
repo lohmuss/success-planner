@@ -8,93 +8,102 @@ let indexedDBStore = require("idb-keyval");
 
 @Injectable()
 export class DailyTasksDataService {
-    dailyTasks: DailyTask[] = [];
-    dailyTaskIds: number[];
-    lastDailyTaskIds: number[];
-    lastTaskId: number = 0;
+    dailyTasks: DailyTask[];
+    editableTaskTitle: string;
 
-    tasks: DailyTask[];
-    subject: Subject<DailyTask[]> = new Subject<DailyTask[]>();
+    dailyTasksSource: Subject<DailyTask[]> = new Subject<DailyTask[]>();
+    taskTitleSource: Subject<string> = new Subject<string>(); 
 
-    constructor() { }
+    constructor() { 
+        this.updateDailyTasks();
+    }
+
+    setDailyTasks(dailyTasks: DailyTask[]) {
+        this.dailyTasks = dailyTasks;
+        this.dailyTasksSource.next(dailyTasks);
+    }
+    
+
+    getDailyTasks(): Observable<DailyTask[]> {
+        return this.dailyTasksSource.asObservable();
+    }
+
+    setEditableTaskTitle(taskTitle: string) {
+        this.editableTaskTitle = taskTitle;
+        this.taskTitleSource.next(taskTitle);
+    }
+
+    getEditableTitle(): Observable<string> {
+        return this.taskTitleSource.asObservable();
+    }
 
     addDailyTask(dailyTask: DailyTask) {
-        dailyTask.id = ++this.lastTaskId;
-        indexedDBStore.set(dailyTask.id, dailyTask).then(() => {
-            this.getDailyTasks();
+        this.getNewTaskId().then((newTaskId: number) => {
+            dailyTask.id = newTaskId;
+            indexedDBStore.set(dailyTask.id, dailyTask).then(() => {
+                this.updateDailyTasks();
+            });
+        });
+    }
+
+    getNewTaskId(){
+        let lastTaskId: number;
+        let newTaskId: number;
+
+        return indexedDBStore.keys().then((taskIds: number[]) => {
+            if (taskIds.length > 0) {
+                lastTaskId = taskIds[taskIds.length-1];
+                newTaskId = ++lastTaskId;
+                console.log(newTaskId);
+                return newTaskId;
+            }
+            return 0;
         });
     }
 
     changeDailyTaskCompletion(dailyTaskId: number) {
-        let dailyTaskIndex = this.findDailyTaskIndexById(dailyTaskId);
-        let completedDailyTask = this.dailyTasks[dailyTaskIndex];
-        completedDailyTask.complete = !completedDailyTask.complete;
-    }
-
-    findDailyTaskIndexById(dailyTaskId: number) {
-        let dailyTasksCount = this.getDailyTasksCount();
-        for(let index = 0; index < dailyTasksCount; index++) {
-            if (this.dailyTasks[index].id === dailyTaskId) {
-                return index;
-            }
-        } 
+        indexedDBStore.get(dailyTaskId).then((dailyTask: DailyTask) => {
+            dailyTask.complete = !dailyTask.complete;
+            indexedDBStore.set(dailyTaskId, dailyTask).then(() =>{
+                this.updateDailyTasks();
+            });
+        });
     }
 
     removeDailyTask(dailyTaskId: number) {
-
         indexedDBStore.delete(dailyTaskId).then(() =>{
-            this.getDailyTasks();
+            this.updateDailyTasks();
         });
     }
 
     editDailyTask(dailyTaskId: number, updatedDailyTask: DailyTask) {
-        indexedDBStore.set(dailyTaskId, updatedDailyTask).then(() =>{
-            this.getDailyTasks();
+        indexedDBStore.set(dailyTaskId, updatedDailyTask).then(() => {
+            this.updateDailyTasks();
         });;
     }
 
-    getDailyTaskTitle(dailyTaskId: number): string {
-        let dailyTaskIndex = this.findDailyTaskIndexById(dailyTaskId);
-        let dailyTaskTitle = this.dailyTasks[dailyTaskIndex].title;
-
-        return dailyTaskTitle;
-    }
-
-    getDailyTasksCount(): number {
-        return this.dailyTasks.length;
-    }
-
-    getTaskId() {
-        let newTaskId: number;
-        newTaskId = this.dailyTaskIds.length;
-        return newTaskId;
-    }
-
-    getDailyTasksIds() {
-        return indexedDBStore.keys().then((keys: number[]) => {
-            this.dailyTaskIds = keys;
+    getDailyTaskTitle(dailyTaskId: number) {
+        indexedDBStore.get(dailyTaskId).then((dailyTask: DailyTask) => {
+            this.setEditableTaskTitle(dailyTask.title);
         });
     }
 
-    getDailyTasks() {
-        this.dailyTasks = [];
-        this.getDailyTasksIds().then(() => {
-            for(let id of this.dailyTaskIds) {
-                indexedDBStore.get(id).then((task: DailyTask) => {
-                    this.dailyTasks.push(task);
-                    this.setTasks(this.dailyTasks);
+    getDailyTaskIds(){
+        return indexedDBStore.keys().then((dailyTaskIds: number[]) => {
+            return dailyTaskIds;
+        });
+    }
+
+    updateDailyTasks() {
+        let tasks: DailyTask[] = [];
+        this.getDailyTaskIds().then((dailyTaskIds: number[]) => {
+            for(let taskId of dailyTaskIds) {
+                indexedDBStore.get(taskId).then((dailyTask: DailyTask) => {
+                    tasks.push(dailyTask);
+                    this.setDailyTasks(tasks);
                 });
             }
         });
-    }
-
-    setTasks(tasks: DailyTask[]): void {
-        this.tasks = tasks;
-        this.subject.next(tasks);
-    }
-
-    getTasks(): Observable<DailyTask[]> {
-        return this.subject.asObservable();
     }
 }
 

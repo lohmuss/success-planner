@@ -18,9 +18,7 @@ export class DailyTasksDialogComponent implements OnInit {
                 @Inject(MD_DIALOG_DATA) public data: any) { }
 
     ngOnInit() { 
-        if (!this.data.isNewTask) {
-            this.taskTitle = this.getEditableTaskTitle(this.data.taskId);
-        }
+        this.getEditableTaskTitle(this.data.taskId);
     }
     
     addTask() {
@@ -30,7 +28,7 @@ export class DailyTasksDialogComponent implements OnInit {
     }
 
     editTask(dailyTaskId: number) {
-        let updatedTask = new DailyTask({title: this.taskTitle, complete: false});
+        let updatedTask = new DailyTask({id:dailyTaskId, title: this.taskTitle, complete: false});
         this._dailyTasksDataService.editDailyTask(dailyTaskId, updatedTask);
         this.dialogRef.close();
     }
@@ -41,7 +39,12 @@ export class DailyTasksDialogComponent implements OnInit {
     }
 
     getEditableTaskTitle(dailyTaskId: number) {
-        return this._dailyTasksDataService.getDailyTaskTitle(dailyTaskId);
+        if (!this.data.isNewTask) {
+            this._dailyTasksDataService.getDailyTaskTitle(dailyTaskId);
+            this._dailyTasksDataService.taskTitleSource.subscribe((taskTitle: string) => {
+                this.taskTitle = taskTitle;
+            });
+        }
     }
 
 }

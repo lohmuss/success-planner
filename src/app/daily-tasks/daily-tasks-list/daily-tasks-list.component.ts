@@ -20,7 +20,7 @@ export class DailyTasksListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._dailyTasksDataService.subject.subscribe((tasks: DailyTask[]) => {
+        this._dailyTasksDataService.dailyTasksSource.subscribe((tasks: DailyTask[]) => {
             this.tasks = tasks;
         });
     }
