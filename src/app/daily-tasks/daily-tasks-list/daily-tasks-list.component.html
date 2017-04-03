@@ -1,0 +1,25 @@
+<md-card>
+    <md-toolbar color="accent">
+        <span>Daily Tasks</span>
+    </md-toolbar>
+    <md-list>
+        <h3 md-subheader>Overdue</h3>
+        <md-divider></md-divider>
+        <h3 md-subheader>Today</h3>
+        <md-divider></md-divider>
+        <h3 md-subheader>Tomorrow</h3>
+        <md-divider></md-divider>
+        <h3 md-subheader>Later</h3>
+        <md-divider></md-divider>
+        <h3 md-subheader>Without Date</h3>
+        <md-list-item  *ngFor="let task of tasks">
+            <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+        </md-list-item>
+    </md-list>
+
+    <span class="newTaskButton">
+        <button md-fab (click)="openNewDailyTaskDialog()">
+            <md-icon>add</md-icon>
+        </button>
+    </span>
+</md-card>
