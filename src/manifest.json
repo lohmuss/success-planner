@@ -1,0 +1,10 @@
+{
+  "name": "Success Planner",
+  "short_name": "Success Planner",
+  
+  "theme_color": "#512DA8",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/"
+}
