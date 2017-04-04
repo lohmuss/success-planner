@@ -1,7 +1,13 @@
 {
   "name": "Success Planner",
   "short_name": "Success Planner",
-  
+  "icons": [
+    {
+      "src": "assets/icons/android-chrome-256x256.png",
+      "sizes": "256x256",
+      "type": "image\/png"
+    }
+  ],
   "theme_color": "#512DA8",
   "background_color": "#ffffff",
   "display": "standalone",
