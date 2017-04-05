@@ -6,13 +6,16 @@
         <h3 md-subheader>Overdue</h3>
         <md-divider></md-divider>
         <h3 md-subheader>Today</h3>
+        <md-list-item  *ngFor="let task of todaysTasks">
+            <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+        </md-list-item>
         <md-divider></md-divider>
         <h3 md-subheader>Tomorrow</h3>
         <md-divider></md-divider>
         <h3 md-subheader>Later</h3>
         <md-divider></md-divider>
         <h3 md-subheader>Without Date</h3>
-        <md-list-item  *ngFor="let task of tasks">
+        <md-list-item  *ngFor="let task of withoutDateTasks">
             <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
         </md-list-item>
     </md-list>

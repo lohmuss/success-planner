@@ -12,6 +12,7 @@ import { DailyTask } from '../daily-task';
 })
 export class DailyTasksDialogComponent implements OnInit {
     taskTitle: string;
+    taskDate: Date;
 
     constructor(private _dailyTasksDataService: DailyTasksDataService,
                 public dialogRef: MdDialogRef<DailyTasksDialogComponent>, 
@@ -19,16 +20,17 @@ export class DailyTasksDialogComponent implements OnInit {
 
     ngOnInit() { 
         this.getEditableTaskTitle(this.data.taskId);
+        this.getEditableTaskDate(this.data.taskId);
     }
     
     addTask() {
-        let newTask = new DailyTask({title: this.taskTitle, complete: false});
+        let newTask = new DailyTask({title: this.taskTitle, date: this.taskDate, complete: false});
         this._dailyTasksDataService.addDailyTask(newTask);
         this.dialogRef.close();
     }
 
     editTask(dailyTaskId: number) {
-        let updatedTask = new DailyTask({id:dailyTaskId, title: this.taskTitle, complete: false});
+        let updatedTask = new DailyTask({id:dailyTaskId, title: this.taskTitle, date: this.taskDate});
         this._dailyTasksDataService.editDailyTask(dailyTaskId, updatedTask);
         this.dialogRef.close();
     }
@@ -43,6 +45,15 @@ export class DailyTasksDialogComponent implements OnInit {
             this._dailyTasksDataService.getDailyTaskTitle(dailyTaskId);
             this._dailyTasksDataService.taskTitleSource.subscribe((taskTitle: string) => {
                 this.taskTitle = taskTitle;
+            });
+        }
+    }
+
+    getEditableTaskDate(dailyTaskId: number) {
+        if (!this.data.isNewTask) {
+            this._dailyTasksDataService.getDailyTaskDate(dailyTaskId);
+            this._dailyTasksDataService.taskDateSource.subscribe((taskDate: Date) => {
+                this.taskDate = taskDate;
             });
         }
     }

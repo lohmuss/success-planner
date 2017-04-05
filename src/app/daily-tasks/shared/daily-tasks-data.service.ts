@@ -10,9 +10,11 @@ let indexedDBStore = require("idb-keyval");
 export class DailyTasksDataService {
     dailyTasks: DailyTask[];
     editableTaskTitle: string;
+    editableTaskDate: Date;
 
     dailyTasksSource: Subject<DailyTask[]> = new Subject<DailyTask[]>();
     taskTitleSource: Subject<string> = new Subject<string>(); 
+    taskDateSource: Subject<Date> = new Subject<Date>(); 
 
     constructor() { 
         this.updateDailyTasks();
@@ -23,9 +25,12 @@ export class DailyTasksDataService {
         this.dailyTasksSource.next(dailyTasks);
     }
     
-
     getDailyTasks(): Observable<DailyTask[]> {
         return this.dailyTasksSource.asObservable();
+    }
+
+    getEditableTitle(): Observable<string> {
+        return this.taskTitleSource.asObservable();
     }
 
     setEditableTaskTitle(taskTitle: string) {
@@ -33,8 +38,13 @@ export class DailyTasksDataService {
         this.taskTitleSource.next(taskTitle);
     }
 
-    getEditableTitle(): Observable<string> {
-        return this.taskTitleSource.asObservable();
+    getEditableDate(): Observable<Date> {
+        return this.taskDateSource.asObservable();
+    }
+
+    setEditableTaskDate(taskDate: Date) {
+        this.editableTaskDate = taskDate;
+        this.taskDateSource.next(taskDate);
     }
 
     addDailyTask(dailyTask: DailyTask) {
@@ -89,6 +99,13 @@ export class DailyTasksDataService {
             this.setEditableTaskTitle(dailyTask.title);
         });
     }
+
+    getDailyTaskDate(dailyTaskId: number) {
+        indexedDBStore.get(dailyTaskId).then((dailyTask: DailyTask) => {
+            this.setEditableTaskDate(dailyTask.date);
+        });
+    }
+
 
     getDailyTaskIds(){
         return indexedDBStore.keys().then((dailyTaskIds: number[]) => {
