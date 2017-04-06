@@ -29,38 +29,88 @@ export class DailyTasksListComponent implements OnInit {
         this._dailyTasksDataService.dailyTasksSource.subscribe((tasks: DailyTask[]) => {
             this.tasks = tasks;
             this.sortTasks();
-            console.log(this.compareTaskDateToToday(this.tasks[0].date));
         });
     }
 
-    compareTaskDateToToday(taskDate: Date): boolean {
-        let todaysDate = new Date();
-        taskDate = new Date(taskDate);
+    isTaskDateValid(task: DailyTask): boolean {
+        let taskDate = this.getTaskDate(task);
 
-        if (todaysDate.getFullYear() == taskDate.getFullYear()) {
-            if (todaysDate.getMonth() == taskDate.getMonth()) {
-                if (todaysDate.getDate() == taskDate.getDate()) {
-                    return true;
-                }
-            }       
+        if (taskDate == undefined || isNaN(taskDate.getTime())) {
+            return false;
+        }
+        return true;
+    }
+    
+    isTaskOverdue(taskDate: Date): boolean {
+        let todaysDate = new Date();
+
+        if (taskDate.getTime() < todaysDate.getTime()) {
+            if (!this.areDatesEqual(todaysDate, taskDate)) {
+                return true;
+            }
         }
         return false;
     }
 
+    areDatesEqual(firstDate: Date, secondDate: Date): boolean {
+        if (firstDate.getFullYear() != secondDate.getFullYear()) {
+            return false;
+        }
+        if (firstDate.getMonth() != secondDate.getMonth()) {
+            return false;
+        }
+        if (firstDate.getDate() != secondDate.getDate()) {
+            return false;
+        }
+        return true;
+    }
+
+    getTaskDate(task: DailyTask): Date {
+        let taskDate = new Date(task.date);
+        return taskDate;
+    }
+
+    getTodaysDate(): Date {
+        let todaysDate = new Date();
+        return todaysDate;
+    }
+
+    getTomorrowsDate(): Date {
+        let todaysDate = new Date();
+        let tomorrowsDate = new Date(todaysDate.setDate(todaysDate.getDate() + 1));
+        return tomorrowsDate;
+    }
+
     sortTasks() {
-        this.emptyTasks();
+        let todaysDate = this.getTodaysDate();
+        let tomorrowsDate = this.getTomorrowsDate();
+        this.emptySortedTasks();
+
         for (let task of this.tasks) {
-            if (task.date != undefined) {
-                if (this.compareTaskDateToToday(task.date)) {
-                    this.todaysTasks.push(task);
-                }
+
+            if (this.isTaskDateValid(task)) {
+                this.sortTaskByDate(task, todaysDate, tomorrowsDate);
             } else {
                 this.withoutDateTasks.push(task);
             }
         }
     }
 
-    emptyTasks() {
+    sortTaskByDate(task: DailyTask, todaysDate: Date, tomorrowsDate: Date) {
+        let taskDate = new Date(task.date);
+
+        if (this.isTaskOverdue(taskDate)) {
+            this.overdueTasks.push(task);
+        } else if (this.areDatesEqual(taskDate, todaysDate)) {
+            this.todaysTasks.push(task);
+        } else if (this.areDatesEqual(taskDate, tomorrowsDate)) {
+            this.tomorrowsTasks.push(task);
+        } else {
+            this.laterTasks.push(task);
+        }
+    }
+
+    emptySortedTasks() {
         this.overdueTasks = [];
         this.todaysTasks = [];
         this.tomorrowsTasks = [];

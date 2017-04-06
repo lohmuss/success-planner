@@ -3,21 +3,41 @@
         <span>Daily Tasks</span>
     </md-toolbar>
     <md-list>
-        <h3 md-subheader>Overdue</h3>
-        <md-divider></md-divider>
-        <h3 md-subheader>Today</h3>
-        <md-list-item  *ngFor="let task of todaysTasks">
-            <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
-        </md-list-item>
-        <md-divider></md-divider>
-        <h3 md-subheader>Tomorrow</h3>
-        <md-divider></md-divider>
-        <h3 md-subheader>Later</h3>
-        <md-divider></md-divider>
-        <h3 md-subheader>Without Date</h3>
-        <md-list-item  *ngFor="let task of withoutDateTasks">
-            <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
-        </md-list-item>
+        <span *ngIf="overdueTasks.length > 0">
+            <h3 md-subheader>Overdue</h3>
+            <md-list-item  *ngFor="let task of overdueTasks">
+                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+            </md-list-item>
+            <md-divider></md-divider>
+        </span>
+        <span *ngIf="todaysTasks.length > 0">
+            <h3 md-subheader>Today</h3>
+            <md-list-item  *ngFor="let task of todaysTasks">
+                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+            </md-list-item>
+            <md-divider></md-divider>
+        </span>
+        <span *ngIf="tomorrowsTasks.length > 0">
+            <h3 md-subheader>Tomorrow</h3>
+            <md-list-item  *ngFor="let task of tomorrowsTasks">
+                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+            </md-list-item>
+            <md-divider></md-divider>
+        </span>
+        <span *ngIf="laterTasks.length > 0">
+            <h3 md-subheader>Later</h3>
+            <md-list-item  *ngFor="let task of laterTasks">
+                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+            </md-list-item>
+            <md-divider></md-divider>
+        </span>
+        <span *ngIf="withoutDateTasks.length > 0">
+            <h3 md-subheader>Without Date</h3>
+            <md-list-item  *ngFor="let task of withoutDateTasks">
+                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+            </md-list-item>
+            <md-divider></md-divider>
+        </span>
     </md-list>
 
     <span class="newTaskButton">
