@@ -12,9 +12,12 @@ before_script:
   - npm install -g angular-cli
   - npm install -g firebase-tools
   - npm install --save @angular/material
+  - npm install --save @angular/animations
+  - npm install --save hammerjs
 
 script:
-  - ng build --prod
+  - ng build --prod --aot
+  - npm run precache
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
