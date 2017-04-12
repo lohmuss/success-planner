@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { DailyTask } from '../daily-task';
 
@@ -12,7 +13,7 @@ import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dia
     styleUrls: ['./daily-tasks-list.component.css']
 })
 export class DailyTasksListComponent implements OnInit {
-    tasks: DailyTask[] = [];
+    tasks: DailyTask[];
     taskTitle: string;
     isNewTask: boolean = true;
 
@@ -23,6 +24,7 @@ export class DailyTasksListComponent implements OnInit {
     withoutDateTasks: DailyTask[] = [];
 
     constructor(private _dailyTasksDataService: DailyTasksDataService, public dialog: MdDialog) {
+        this._dailyTasksDataService.updateDailyTasks();
     }
 
     ngOnInit() {

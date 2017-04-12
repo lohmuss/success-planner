@@ -161,17 +161,6 @@ export class DailyTasksDataService {
     }
 
     updateDailyTasks() {
-        /*
-        let tasks: DailyTask[] = [];
-        this.getDailyTaskIds().then((dailyTaskIds: number[]) => {
-            for(let taskId of dailyTaskIds) {
-                idbDailyTasks.get(taskId).then((dailyTask: DailyTask) => {
-                    tasks.push(dailyTask);
-                });
-            }
-            this.setDailyTasks(tasks);
-        });
-        */
         idbDailyTasks.getAll().then((dailyTasks: DailyTask[]) => {
             this.setDailyTasks(dailyTasks);
         });

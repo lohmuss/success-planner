@@ -1,4 +1,8 @@
 <md-toolbar color="primary">
     <span>Success Planner</span>
 </md-toolbar>
-<daily-tasks-list></daily-tasks-list>
+<span>
+    <a md-raised-button [routerLink]="['dailytasks']">Daily Tasks</a>
+    <a md-raised-button [routerLink]="['habits']">Habits</a>
+</span>
+<router-outlet></router-outlet>
