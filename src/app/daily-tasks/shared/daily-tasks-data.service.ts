@@ -4,7 +4,54 @@ import { Observable } from 'rxjs/Observable';
 
 import { DailyTask } from '../daily-task';
 
-let indexedDBStore = require("idb-keyval");
+let idb = require("idb");
+
+const dbPromise = idb.open('success-planner-store', 1, (upgradeDB: any) => {
+    upgradeDB.createObjectStore('daily-tasks');
+});
+
+const idbDailyTasks = {
+    get(key: number) {
+        return dbPromise.then((db: any) => {
+            return db.transaction('daily-tasks')
+            .objectStore('daily-tasks').get(key);
+        });
+    },
+      getAll() {
+        return dbPromise.then((db: any) => {
+            return db.transaction('daily-tasks')
+            .objectStore('daily-tasks').getAll();
+        });
+    },
+    set(key: number, val: DailyTask) {
+        return dbPromise.then((db: any) => {
+            const tx = db.transaction('daily-tasks', 'readwrite');
+            tx.objectStore('daily-tasks').put(val, key);
+            return tx.complete;
+        });
+    },
+    delete(key: number) {
+        return dbPromise.then((db: any) => {
+            const tx = db.transaction('daily-tasks', 'readwrite');
+            tx.objectStore('daily-tasks').delete(key);
+            return tx.complete;
+        });
+    },
+    keys() {
+        return dbPromise.then((db: any) => {
+            const tx = db.transaction('daily-tasks');
+            const keys: number[] = [];
+            const store = tx.objectStore('daily-tasks');
+ 
+            (store.iterateKeyCursor || store.iterateCursor).call(store, (cursor: any) => {
+            if (!cursor) return;
+            keys.push(cursor.key);
+            cursor.continue();
+        });
+        return tx.complete.then(() => keys);
+    });
+    }
+};
 
 @Injectable()
 export class DailyTasksDataService {
@@ -50,8 +97,8 @@ export class DailyTasksDataService {
     addDailyTask(dailyTask: DailyTask) {
         this.getNewTaskId().then((newTaskId: number) => {
             dailyTask.id = newTaskId;
-            indexedDBStore.set(dailyTask.id, dailyTask).then(() => {
-                this.updateDailyTasks();
+            idbDailyTasks.set(dailyTask.id, dailyTask).then(() => {
+                this. updateDailyTasks();
             });
         });
     }
@@ -60,7 +107,7 @@ export class DailyTasksDataService {
         let lastTaskId: number;
         let newTaskId: number;
 
-        return indexedDBStore.keys().then((taskIds: number[]) => {
+        return idbDailyTasks.keys().then((taskIds: number[]) => {
             if (taskIds.length > 0) {
                 lastTaskId = taskIds[taskIds.length-1];
                 newTaskId = ++lastTaskId;
@@ -71,57 +118,62 @@ export class DailyTasksDataService {
     }
 
     changeDailyTaskCompletion(dailyTaskId: number) {
-        indexedDBStore.get(dailyTaskId).then((dailyTask: DailyTask) => {
+        idbDailyTasks.get(dailyTaskId).then((dailyTask: DailyTask) => {
             dailyTask.complete = !dailyTask.complete;
-            indexedDBStore.set(dailyTaskId, dailyTask).then(() =>{
+            idbDailyTasks.set(dailyTaskId, dailyTask).then(() =>{
                 this.updateDailyTasks();
             });
         });
     }
 
     removeDailyTask(dailyTaskId: number) {
-        indexedDBStore.delete(dailyTaskId).then(() =>{
+        idbDailyTasks.delete(dailyTaskId).then(() => {
             this.updateDailyTasks();
         });
     }
 
     editDailyTask(dailyTaskId: number, updatedDailyTask: DailyTask) {
-        indexedDBStore.get(dailyTaskId).then((dailyTask: DailyTask) => {
+        idbDailyTasks.get(dailyTaskId).then((dailyTask: DailyTask) => {
             updatedDailyTask.complete = dailyTask.complete;
-            indexedDBStore.set(dailyTaskId, updatedDailyTask).then(() => {
+            idbDailyTasks.set(dailyTaskId, updatedDailyTask).then(() => {
                 this.updateDailyTasks();
             });;
         });
     }
 
     getDailyTaskTitle(dailyTaskId: number) {
-        indexedDBStore.get(dailyTaskId).then((dailyTask: DailyTask) => {
+        idbDailyTasks.get(dailyTaskId).then((dailyTask: DailyTask) => {
             this.setEditableTaskTitle(dailyTask.title);
         });
     }
 
     getDailyTaskDate(dailyTaskId: number) {
-        indexedDBStore.get(dailyTaskId).then((dailyTask: DailyTask) => {
+        idbDailyTasks.get(dailyTaskId).then((dailyTask: DailyTask) => {
             this.setEditableTaskDate(dailyTask.date);
         });
     }
 
 
     getDailyTaskIds(){
-        return indexedDBStore.keys().then((dailyTaskIds: number[]) => {
+        return idbDailyTasks.keys().then((dailyTaskIds: number[]) => {
             return dailyTaskIds;
         });
     }
 
     updateDailyTasks() {
+        /*
         let tasks: DailyTask[] = [];
         this.getDailyTaskIds().then((dailyTaskIds: number[]) => {
             for(let taskId of dailyTaskIds) {
-                indexedDBStore.get(taskId).then((dailyTask: DailyTask) => {
+                idbDailyTasks.get(taskId).then((dailyTask: DailyTask) => {
                     tasks.push(dailyTask);
-                    this.setDailyTasks(tasks);
                 });
             }
+            this.setDailyTasks(tasks);
+        });
+        */
+        idbDailyTasks.getAll().then((dailyTasks: DailyTask[]) => {
+            this.setDailyTasks(dailyTasks);
         });
     }
 }
