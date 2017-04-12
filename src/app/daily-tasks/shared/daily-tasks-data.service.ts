@@ -8,6 +8,7 @@ let idb = require("idb");
 
 const dbPromise = idb.open('success-planner-store', 1, (upgradeDB: any) => {
     upgradeDB.createObjectStore('daily-tasks');
+    upgradeDB.createObjectStore('habits');
 });
 
 const idbDailyTasks = {
@@ -17,7 +18,7 @@ const idbDailyTasks = {
             .objectStore('daily-tasks').get(key);
         });
     },
-      getAll() {
+    getAll() {
         return dbPromise.then((db: any) => {
             return db.transaction('daily-tasks')
             .objectStore('daily-tasks').getAll();

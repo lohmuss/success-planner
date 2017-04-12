@@ -13,6 +13,7 @@ import { DailyTasksItemComponent } from './daily-tasks/daily-tasks-item/daily-ta
 import { HabitsComponent } from './habits/habits.component';
 
 import { DailyTasksDataService } from './daily-tasks/shared/daily-tasks-data.service'
+import { HabitsDataService } from './habits/shared/habits-data.service'
 
 @NgModule({
   imports: [ 
@@ -29,7 +30,10 @@ import { DailyTasksDataService } from './daily-tasks/shared/daily-tasks-data.ser
     DailyTasksDialogComponent,
     HabitsComponent
   ],
-  providers:  [ DailyTasksDataService ],
+  providers:  [
+    DailyTasksDataService,
+    HabitsDataService
+    ],
   bootstrap:    [ AppComponent ],
   entryComponents: [ DailyTasksDialogComponent ]
 })
