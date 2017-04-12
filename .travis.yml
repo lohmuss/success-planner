@@ -9,7 +9,7 @@ branches:
     - master
 
 before_script:
-  - npm install -g angular-cli
+  - npm install -g @angular/cli@latest
   - npm install -g firebase-tools
   - npm install --save @angular/material
   - npm install --save @angular/animations
