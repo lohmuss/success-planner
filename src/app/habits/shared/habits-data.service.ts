@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-import { Habit, HabitWeek } from '../habit';
+import { Habit, HabitWeek } from './habit';
 
 let idb = require("idb");
 
@@ -57,8 +57,10 @@ const idbHabits = {
 @Injectable()
 export class HabitsDataService {
     habits: Habit[];
+    editableHabitTitle: string;
 
     habitsSource: Subject<Habit[]> = new Subject<Habit[]>();
+    editableHabitTitleSource: Subject<string> = new Subject<string>();
 
     constructor() {}
 
@@ -71,11 +73,20 @@ export class HabitsDataService {
         return this.habitsSource.asObservable();
     }
 
+    setEditableHabitTitle(title: string) {
+        this.editableHabitTitle = title;
+        this.editableHabitTitleSource.next(title);
+    }
+    
+    getEditableHabitTitle(): Observable<string> {
+        return this.editableHabitTitleSource.asObservable();
+    }
+
     addHabit(habit: Habit) {
         this.getNewHabitId().then((newHabitId: number) => {
             habit.id = newHabitId;
             idbHabits.set(habit.id, habit).then(() => {
-                console.log("added habbit");
+                this.updateHabits();
             });
         });
     }
@@ -93,14 +104,31 @@ export class HabitsDataService {
             return 0;
         });
     }
-    /*
+
+    removeHabit(habitId: number) {
+        idbHabits.delete(habitId).then(() => {
+            this.updateHabits();
+        });
+    }
+
     editHabit(habitId: number, updatedHabit: Habit) {
         idbHabits.get(habitId).then((habit: Habit) => {
 
             idbHabits.set(habitId, updatedHabit).then(() => {
-                console.log("updated");
+                this.updateHabits();
             });;
         });
     }
-    */
+
+    getHabitTitle(habitId: number) {
+        idbHabits.get(habitId).then((habit: Habit) => {
+            this.setEditableHabitTitle(habit.title);
+        });
+    }
+
+    updateHabits() {
+        idbHabits.getAll().then((habits: Habit[]) => {
+            this.setHabits(habits);
+        });
+    }
 }

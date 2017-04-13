@@ -4,7 +4,7 @@ import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { DailyTasksDataService } from '../shared/daily-tasks-data.service'
 import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dialog.component'
 
-import { DailyTask } from '../daily-task';
+import { DailyTask } from '../shared/daily-task';
 
 @Component({
     selector: 'daily-tasks-item',

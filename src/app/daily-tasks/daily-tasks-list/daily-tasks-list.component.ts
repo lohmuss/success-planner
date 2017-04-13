@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { DailyTask } from '../daily-task';
+import { DailyTask } from '../shared/daily-task';
 
 import { DailyTasksDataService } from '../shared/daily-tasks-data.service'
 import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dialog.component'

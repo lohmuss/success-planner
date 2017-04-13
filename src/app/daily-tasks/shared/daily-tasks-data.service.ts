@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-import { DailyTask } from '../daily-task';
+import { DailyTask } from './daily-task';
 
 let idb = require("idb");
 

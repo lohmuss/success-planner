@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { DailyTasksDataService } from '../shared/daily-tasks-data.service'
 
-import { DailyTask } from '../daily-task';
+import { DailyTask } from '../shared/daily-task';
 
 @Component({
-    selector: 'daily-tasks-new-task',
+    selector: 'daily-tasks-dialog',
     templateUrl: './daily-tasks-dialog.component.html',
     styleUrls: ['./daily-tasks-dialog.component.css']
 })
