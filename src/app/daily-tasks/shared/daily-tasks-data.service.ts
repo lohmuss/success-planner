@@ -155,7 +155,7 @@ export class DailyTasksDataService {
     }
 
 
-    getDailyTaskIds(){
+    getDailyTaskIds() {
         return idbDailyTasks.keys().then((dailyTaskIds: number[]) => {
             return dailyTaskIds;
         });

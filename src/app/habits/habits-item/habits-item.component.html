@@ -1,0 +1,13 @@
+<md-list-item>
+    <md-card>
+        <md-card-header>
+            <md-card-title (click)="openEditHabitDialog(habit.id)">{{ habit.title }}</md-card-title>
+        </md-card-header>
+        <md-card-actions>
+            <span *ngFor="let day of habit.weeks[0].days">
+                <md-icon mat-list-avatar>check_box_outline_blank</md-icon>
+                <md-icon mat-list-avatar>check_box</md-icon>
+            </span>
+        </md-card-actions>
+    </md-card>
+<md-list-item>

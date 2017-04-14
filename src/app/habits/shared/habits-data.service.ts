@@ -58,9 +58,11 @@ const idbHabits = {
 export class HabitsDataService {
     habits: Habit[];
     editableHabitTitle: string;
+    editableHabitWeeks: HabitWeek[];
 
     habitsSource: Subject<Habit[]> = new Subject<Habit[]>();
     editableHabitTitleSource: Subject<string> = new Subject<string>();
+    editableHabitWeeksSource: Subject<HabitWeek[]> = new Subject<HabitWeek[]>();
 
     constructor() {}
 
@@ -80,6 +82,15 @@ export class HabitsDataService {
     
     getEditableHabitTitle(): Observable<string> {
         return this.editableHabitTitleSource.asObservable();
+    }
+
+    setEditableHabitWeeks(habitWeeks: HabitWeek[]) {
+        this.editableHabitWeeks = habitWeeks;
+        this.editableHabitWeeksSource.next(habitWeeks);
+    }
+    
+    getEditableHabitWeeks(): Observable<HabitWeek[]> {
+        return this.editableHabitWeeksSource.asObservable();
     }
 
     addHabit(habit: Habit) {
@@ -123,6 +134,12 @@ export class HabitsDataService {
     getHabitTitle(habitId: number) {
         idbHabits.get(habitId).then((habit: Habit) => {
             this.setEditableHabitTitle(habit.title);
+        });
+    }
+
+    getHabitWeeks(habitId: number) {
+        idbHabits.get(habitId).then((habit: Habit) => {
+            this.setEditableHabitWeeks(habit.weeks);
         });
     }
 

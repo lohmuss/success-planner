@@ -1,0 +1,24 @@
+<span *ngIf="data.isNewHabit">
+    <h1 md-dialog-title>Add Habit</h1>
+    <div md-dialog-content>
+        <md-input-container>
+            <input mdInput placeholder="Habit Title" type="text" name="habitTitle" [(ngModel)]="habitTitle">
+        </md-input-container>
+    </div>
+    <div md-dialog-actions>
+        <button md-raised-button color="primary" (click)="addHabit()">Add</button>
+    </div>
+</span>
+
+<span *ngIf="!data.isNewHabit">
+    <h1 md-dialog-title>Edit Habit</h1>
+    <div md-dialog-content>
+         <md-input-container>
+            <input mdInput placeholder="Habit Title" type="text" name="habitTitle" [(ngModel)]="habitTitle">
+        </md-input-container>
+    </div>
+    <div md-dialog-actions>
+        <button md-raised-button color="primary" (click)="editHabit(data.habitId)">Edit</button>
+        <button md-raised-button color="warn" (click)="removeHabit(data.habitId)">Delete</button>
+    </div>
+</span>

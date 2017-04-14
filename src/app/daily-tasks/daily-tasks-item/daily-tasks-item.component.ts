@@ -13,7 +13,6 @@ import { DailyTask } from '../shared/daily-task';
 })
 export class DailyTasksItemComponent implements OnInit {
     @Input() dailyTask: DailyTask;
-    taskTitle: string;
 
     constructor(private _dailyTasksDataService: DailyTasksDataService, public dialog: MdDialog) { }
 
