@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { MdDialogModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 
 import { ROUTER } from './app.router';
@@ -21,7 +22,8 @@ import { HabitsDataService } from './habits/shared/habits-data.service'
   imports: 
   [ 
     BrowserModule, 
-    FormsModule, 
+    FormsModule,
+    BrowserAnimationsModule, 
     ROUTER, 
     MaterialModule.forRoot(), 
     MdDialogModule.forRoot() 

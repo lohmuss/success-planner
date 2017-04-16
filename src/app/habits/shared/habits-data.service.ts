@@ -3,6 +3,7 @@ import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 import { Habit, HabitWeek } from './habit';
+import { DateFunctions } from '../../shared/date-functions';
 
 let idb = require("idb");
 
@@ -56,6 +57,8 @@ const idbHabits = {
 
 @Injectable()
 export class HabitsDataService {
+    dateFunctions = new DateFunctions();
+
     habits: Habit[];
     editableHabitTitle: string;
     editableHabitWeeks: HabitWeek[];
@@ -124,11 +127,38 @@ export class HabitsDataService {
 
     editHabit(habitId: number, updatedHabit: Habit) {
         idbHabits.get(habitId).then((habit: Habit) => {
-
             idbHabits.set(habitId, updatedHabit).then(() => {
                 this.updateHabits();
             });;
         });
+    }
+
+    addHabitWeek(habitId: number, week: HabitWeek) {
+        idbHabits.get(habitId).then((habit: Habit) => {
+            let updatedHabit: Habit = habit;
+            updatedHabit.weeks.push(week);
+            idbHabits.set(habitId, updatedHabit).then(() => {
+                this.updateHabits();
+            });;
+        });
+    }
+
+    changeHabitCompletion(habitId: number, dayId: number, shownWeek: HabitWeek) {
+        idbHabits.get(habitId).then((habit: Habit) => {
+            let changableWeekId = this.getShownHabitWeekId(habit, shownWeek);
+            habit.weeks[changableWeekId].days[dayId] = !habit.weeks[changableWeekId].days[dayId];
+            idbHabits.set(habitId, habit).then(() => {
+                this.updateHabits();
+            });;
+        });
+    }
+
+    getShownHabitWeekId(habit: Habit, shownWeek: HabitWeek): number {
+        for (let week of habit.weeks) {
+            if (this.dateFunctions.areDatesEqual(week.weekStart, shownWeek.weekStart)) {
+                return habit.weeks.indexOf(week);
+            }
+        }
     }
 
     getHabitTitle(habitId: number) {

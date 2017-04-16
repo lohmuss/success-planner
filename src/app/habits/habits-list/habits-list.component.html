@@ -1,19 +1,21 @@
+<span>
+    <button *ngIf="previousWeekDate" (click)="changeToPreviousWeek()">Previous</button>
+    <button *ngIf="nextWeekDate" (click)="changeToNextWeek()">Next</button>
+</span>
+
 <md-card>
     <md-toolbar color="accent">
         <span>Habits</span>
     </md-toolbar>
-    <md-list>
-        <span *ngIf="habits.length > 0">
-            <md-list-item  *ngFor="let habit of habits">
-                <habits-item [habit] = "habit" class="habit-row"></habits-item>
-            </md-list-item>
+        <span *ngIf="shownWeekHabits.length > 0">
+            <span  *ngFor="let habit of shownWeekHabits">
+                <habits-item [habit] = "habit" [shownWeekDate]="shownWeekDate" class="habit-row"></habits-item>
+            </span>
             <md-divider></md-divider>
         </span>
-    </md-list>
-
-    <span class="newHabitButton">
-        <button md-fab (click)="openNewHabitDialog()">
-            <md-icon>add</md-icon>
-        </button>
-    </span>
 </md-card>
+<span class="newHabitButton">
+    <button md-fab (click)="openNewHabitDialog()">
+        <md-icon>add</md-icon>
+    </button>
+</span>

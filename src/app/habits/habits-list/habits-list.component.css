@@ -1,5 +1,5 @@
-.habit-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+.newHabitButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
 }
