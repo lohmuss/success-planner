@@ -1,5 +1,18 @@
 export class DateFunctions {
-    areDatesEqual(firstDate: Date, secondDate: Date): boolean {
+    areTasksDatesEqual(firstDate: Date, secondDate: Date): boolean {
+        if (firstDate.getFullYear() != secondDate.getFullYear()) {
+            return false;
+        }
+        if (firstDate.getMonth() != secondDate.getMonth()) {
+            return false;
+        }
+        if (firstDate.getDate() != secondDate.getDate()) {
+            return false;
+        }
+        return true;
+    }
+
+    areHabitsDatesEqual(firstDate: Date, secondDate: Date): boolean {
         if (firstDate.getDate() === secondDate.getDate()) {
             return true;
         }

@@ -37,7 +37,7 @@ export class HabitsItemComponent implements OnInit {
 
     getShownWeek(shownWeekDate: Date) {
         for (let week of this.habit.weeks) {
-            if (this.dateFunctions.areDatesEqual(shownWeekDate, week.weekStart)) {
+            if (this.dateFunctions.areHabitsDatesEqual(shownWeekDate, week.weekStart)) {
                 this.shownWeek = week;
             }
         }

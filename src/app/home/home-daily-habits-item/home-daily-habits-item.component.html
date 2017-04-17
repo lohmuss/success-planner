@@ -1,0 +1,11 @@
+<span>
+    <md-card>
+        <md-card-header>
+            <md-card-title>{{ habit.title }}</md-card-title>
+        </md-card-header>
+        <md-card-actions *ngIf="shownWeek">
+            <md-icon mat-list-avatar *ngIf="!shownWeek.days[shownDay]" (click)="changeHabitCompletion(habit.id, shownDay, shownWeek)">check_box_outline_blank</md-icon>
+            <md-icon mat-list-avatar *ngIf="shownWeek.days[shownDay]" (click)="changeHabitCompletion(habit.id, shownDay, shownWeek)">check_box</md-icon>
+        </md-card-actions>
+    </md-card>
+<span>

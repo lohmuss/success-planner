@@ -155,7 +155,7 @@ export class HabitsDataService {
 
     getShownHabitWeekId(habit: Habit, shownWeek: HabitWeek): number {
         for (let week of habit.weeks) {
-            if (this.dateFunctions.areDatesEqual(week.weekStart, shownWeek.weekStart)) {
+            if (this.dateFunctions.areHabitsDatesEqual(week.weekStart, shownWeek.weekStart)) {
                 return habit.weeks.indexOf(week);
             }
         }

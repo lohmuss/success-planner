@@ -1,0 +1,11 @@
+<md-card>
+    <md-toolbar color="accent">
+        <span>Habits</span>
+    </md-toolbar>
+        <span *ngIf="shownWeekHabits.length > 0">
+            <span  *ngFor="let habit of shownWeekHabits">
+                <home-daily-habits-item [habit] = "habit" [shownWeekDate]="shownWeekDate"></home-daily-habits-item>
+            </span>
+            <md-divider></md-divider>
+        </span>
+</md-card>

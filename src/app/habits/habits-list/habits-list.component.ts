@@ -55,7 +55,7 @@ export class HabitsListComponent implements OnInit {
     currentWeekExists(habitWeeks: HabitWeek[]) {
         let currentWeek = this.dateFunctions.getWeekStartDate();
         for (let habitWeek of habitWeeks) {
-            if (this.dateFunctions.areDatesEqual(currentWeek, habitWeek.weekStart)) {
+            if (this.dateFunctions.areHabitsDatesEqual(currentWeek, habitWeek.weekStart)) {
                 return true
             }
         }
@@ -66,7 +66,7 @@ export class HabitsListComponent implements OnInit {
         this.shownWeekHabits = [];
         for (let habit of this.habits) {
             for (let week of habit.weeks) {
-                if (this.dateFunctions.areDatesEqual(shownWeek, week.weekStart)) {
+                if (this.dateFunctions.areHabitsDatesEqual(shownWeek, week.weekStart)) {
                     this.shownWeekHabits.push(habit);
                 }
             }
@@ -87,7 +87,7 @@ export class HabitsListComponent implements OnInit {
 
     isWeekStartUnique(weekStart: Date): boolean {
         for (let weekStart2 of this.weekStarts) {
-            if (this.dateFunctions.areDatesEqual(weekStart, weekStart2)) {
+            if (this.dateFunctions.areHabitsDatesEqual(weekStart, weekStart2)) {
                 return false;
             }
         }
@@ -127,7 +127,7 @@ export class HabitsListComponent implements OnInit {
     getWeekIndex(): number {
         let index = 0;
         for (let weekStart of this.weekStarts) {
-            if (this.dateFunctions.areDatesEqual(weekStart, this.shownWeekDate)) {
+            if (this.dateFunctions.areHabitsDatesEqual(weekStart, this.shownWeekDate)) {
                 return index;
             }
             index++;

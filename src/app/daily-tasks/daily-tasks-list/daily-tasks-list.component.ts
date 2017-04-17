@@ -3,6 +3,7 @@ import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { DailyTask } from '../shared/daily-task';
+import { DateFunctions } from '../../shared/date-functions';
 
 import { DailyTasksDataService } from '../shared/daily-tasks-data.service'
 import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dialog.component'
@@ -13,6 +14,7 @@ import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dia
     styleUrls: ['./daily-tasks-list.component.css']
 })
 export class DailyTasksListComponent implements OnInit {
+    dateFunctions = new DateFunctions();
     tasks: DailyTask[];
     taskTitle: string;
     isNewTask: boolean = true;
@@ -47,24 +49,11 @@ export class DailyTasksListComponent implements OnInit {
         let todaysDate = new Date();
 
         if (taskDate.getTime() < todaysDate.getTime()) {
-            if (!this.areDatesEqual(todaysDate, taskDate)) {
+            if (!this.dateFunctions.areTasksDatesEqual(todaysDate, taskDate)) {
                 return true;
             }
         }
         return false;
-    }
-
-    areDatesEqual(firstDate: Date, secondDate: Date): boolean {
-        if (firstDate.getFullYear() != secondDate.getFullYear()) {
-            return false;
-        }
-        if (firstDate.getMonth() != secondDate.getMonth()) {
-            return false;
-        }
-        if (firstDate.getDate() != secondDate.getDate()) {
-            return false;
-        }
-        return true;
     }
 
     getTaskDate(task: DailyTask): Date {
@@ -103,9 +92,9 @@ export class DailyTasksListComponent implements OnInit {
 
         if (this.isTaskOverdue(taskDate)) {
             this.overdueTasks.push(task);
-        } else if (this.areDatesEqual(taskDate, todaysDate)) {
+        } else if (this.dateFunctions.areTasksDatesEqual(taskDate, todaysDate)) {
             this.todaysTasks.push(task);
-        } else if (this.areDatesEqual(taskDate, tomorrowsDate)) {
+        } else if (this.dateFunctions.areTasksDatesEqual(taskDate, tomorrowsDate)) {
             this.tomorrowsTasks.push(task);
         } else {
             this.laterTasks.push(task);
