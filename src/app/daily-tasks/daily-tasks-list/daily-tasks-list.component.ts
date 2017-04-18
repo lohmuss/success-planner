@@ -3,7 +3,6 @@ import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { DailyTask } from '../shared/daily-task';
-import { DateFunctions } from '../../shared/date-functions';
 
 import { DailyTasksDataService } from '../shared/daily-tasks-data.service'
 import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dialog.component'
@@ -14,99 +13,26 @@ import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dia
     styleUrls: ['./daily-tasks-list.component.css']
 })
 export class DailyTasksListComponent implements OnInit {
-    dateFunctions = new DateFunctions();
-    tasks: DailyTask[];
-    taskTitle: string;
-    isNewTask: boolean = true;
-
     overdueTasks: DailyTask[] = [];
     todaysTasks: DailyTask[] = [];
     tomorrowsTasks: DailyTask[] = [];
     laterTasks: DailyTask[] = [];
     withoutDateTasks: DailyTask[] = [];
+    
+    isNewTask: boolean = true;
 
     constructor(private _dailyTasksDataService: DailyTasksDataService, public dialog: MdDialog) {
         this._dailyTasksDataService.updateDailyTasks();
     }
 
     ngOnInit() {
-        this._dailyTasksDataService.dailyTasksSource.subscribe((tasks: DailyTask[]) => {
-            this.tasks = tasks;
-            this.sortTasks();
+        this._dailyTasksDataService.sortedDailyTasksSource.subscribe((sortedTasks: DailyTask[][]) => {
+            this.overdueTasks = sortedTasks["overdueTasks"];
+            this.todaysTasks = sortedTasks["todaysTasks"];
+            this.tomorrowsTasks = sortedTasks["tomorrowsTasks"];
+            this.laterTasks = sortedTasks["laterTasks"];
+            this.withoutDateTasks = sortedTasks["withoutDateTasks"];
         });
-    }
-
-    isTaskDateValid(task: DailyTask): boolean {
-        let taskDate = this.getTaskDate(task);
-
-        if (taskDate == undefined || isNaN(taskDate.getTime())) {
-            return false;
-        }
-        return true;
-    }
-    
-    isTaskOverdue(taskDate: Date): boolean {
-        let todaysDate = new Date();
-
-        if (taskDate.getTime() < todaysDate.getTime()) {
-            if (!this.dateFunctions.areTasksDatesEqual(todaysDate, taskDate)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    getTaskDate(task: DailyTask): Date {
-        let taskDate = new Date(task.date);
-        return taskDate;
-    }
-
-    getTodaysDate(): Date {
-        let todaysDate = new Date();
-        return todaysDate;
-    }
-
-    getTomorrowsDate(): Date {
-        let todaysDate = new Date();
-        let tomorrowsDate = new Date(todaysDate.setDate(todaysDate.getDate() + 1));
-        return tomorrowsDate;
-    }
-
-    sortTasks() {
-        let todaysDate = this.getTodaysDate();
-        let tomorrowsDate = this.getTomorrowsDate();
-        this.emptySortedTasks();
-
-        for (let task of this.tasks) {
-
-            if (this.isTaskDateValid(task)) {
-                this.sortTaskByDate(task, todaysDate, tomorrowsDate);
-            } else {
-                this.withoutDateTasks.push(task);
-            }
-        }
-    }
-
-    sortTaskByDate(task: DailyTask, todaysDate: Date, tomorrowsDate: Date) {
-        let taskDate = new Date(task.date);
-
-        if (this.isTaskOverdue(taskDate)) {
-            this.overdueTasks.push(task);
-        } else if (this.dateFunctions.areTasksDatesEqual(taskDate, todaysDate)) {
-            this.todaysTasks.push(task);
-        } else if (this.dateFunctions.areTasksDatesEqual(taskDate, tomorrowsDate)) {
-            this.tomorrowsTasks.push(task);
-        } else {
-            this.laterTasks.push(task);
-        }
-    }
-
-    emptySortedTasks() {
-        this.overdueTasks = [];
-        this.todaysTasks = [];
-        this.tomorrowsTasks = [];
-        this.laterTasks = [];
-        this.withoutDateTasks = [];
     }
 
     openNewDailyTaskDialog() {

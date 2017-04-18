@@ -28,4 +28,15 @@ export class DateFunctions {
 
         return weekStartDate;
     }
+
+    getTodaysDate(): Date {
+        let todaysDate = new Date();
+        return todaysDate;
+    }
+
+    getTomorrowsDate(): Date {
+        let todaysDate = new Date();
+        let tomorrowsDate = new Date(todaysDate.setDate(todaysDate.getDate() + 1));
+        return tomorrowsDate;
+    }
 }

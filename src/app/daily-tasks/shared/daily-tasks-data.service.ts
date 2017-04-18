@@ -3,6 +3,7 @@ import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 import { DailyTask } from './daily-task';
+import { DateFunctions } from '../../shared/date-functions';
 
 let idb = require("idb");
 
@@ -56,25 +57,33 @@ const idbDailyTasks = {
 
 @Injectable()
 export class DailyTasksDataService {
-    dailyTasks: DailyTask[];
+    dateFunctions = new DateFunctions();
+    
+    overdueTasks: DailyTask[] = [];
+    todaysTasks: DailyTask[] = [];
+    tomorrowsTasks: DailyTask[] = [];
+    laterTasks: DailyTask[] = [];
+    withoutDateTasks: DailyTask[] = [];
+    sortedDailyTasks: DailyTask[][] = [];
+
     editableTaskTitle: string;
     editableTaskDate: Date;
 
-    dailyTasksSource: Subject<DailyTask[]> = new Subject<DailyTask[]>();
+    sortedDailyTasksSource: Subject<DailyTask[][]> = new Subject<DailyTask[][]>();
     taskTitleSource: Subject<string> = new Subject<string>(); 
-    taskDateSource: Subject<Date> = new Subject<Date>(); 
+    taskDateSource: Subject<Date> = new Subject<Date>();
 
     constructor() { 
         this.updateDailyTasks();
     }
 
-    setDailyTasks(dailyTasks: DailyTask[]) {
-        this.dailyTasks = dailyTasks;
-        this.dailyTasksSource.next(dailyTasks);
+    setSortedDailyTasks(sortedDailyTasks: DailyTask[][]) {
+        this.sortedDailyTasks = sortedDailyTasks;
+        this.sortedDailyTasksSource.next(sortedDailyTasks);
     }
     
-    getDailyTasks(): Observable<DailyTask[]> {
-        return this.dailyTasksSource.asObservable();
+    getSortedDailyTasks(): Observable<DailyTask[][]> {
+        return this.sortedDailyTasksSource.asObservable();
     }
 
     getEditableTitle(): Observable<string> {
@@ -161,10 +170,81 @@ export class DailyTasksDataService {
         });
     }
 
+    isTaskDateValid(task: DailyTask): boolean {
+        let taskDate = this.getTaskDate(task);
+
+        if (taskDate == undefined || isNaN(taskDate.getTime())) {
+            return false;
+        }
+        return true;
+    }
+
+    getTaskDate(task: DailyTask): Date {
+        let taskDate = new Date(task.date);
+        return taskDate;
+    }
+    
+    isTaskOverdue(taskDate: Date): boolean {
+        let todaysDate = new Date();
+
+        if (taskDate.getTime() < todaysDate.getTime()) {
+            if (!this.dateFunctions.areTasksDatesEqual(todaysDate, taskDate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    sortTasks(dailyTasks: DailyTask[]) {
+        let todaysDate = this.dateFunctions.getTodaysDate();
+        let tomorrowsDate = this.dateFunctions.getTomorrowsDate();
+        this.emptySortedTasks();
+
+        for (let task of dailyTasks) {
+
+            if (this.isTaskDateValid(task)) {
+                this.sortTaskByDate(task, todaysDate, tomorrowsDate);
+            } else {
+                this.withoutDateTasks.push(task);
+            }
+        }
+    }
+
+    sortTaskByDate(task: DailyTask, todaysDate: Date, tomorrowsDate: Date) {
+        let taskDate = new Date(task.date);
+
+        if (this.isTaskOverdue(taskDate)) {
+            this.overdueTasks.push(task);
+        } else if (this.dateFunctions.areTasksDatesEqual(taskDate, todaysDate)) {
+            this.todaysTasks.push(task);
+        } else if (this.dateFunctions.areTasksDatesEqual(taskDate, tomorrowsDate)) {
+            this.tomorrowsTasks.push(task);
+        } else {
+            this.laterTasks.push(task);
+        }
+    }
+
+    addSortedTasks() {
+        this.sortedDailyTasks["overdueTasks"] = this.overdueTasks;
+        this.sortedDailyTasks["todaysTasks"] = this.todaysTasks;
+        this.sortedDailyTasks["tomorrowsTasks"] = this.tomorrowsTasks;
+        this.sortedDailyTasks["laterTasks"] = this.laterTasks;
+        this.sortedDailyTasks["withoutDateTasks"] = this.withoutDateTasks;
+    }
+
+    emptySortedTasks() {
+        this.overdueTasks = [];
+        this.todaysTasks = [];
+        this.tomorrowsTasks = [];
+        this.laterTasks = [];
+        this.withoutDateTasks = [];
+    }
+
     updateDailyTasks() {
         idbDailyTasks.getAll().then((dailyTasks: DailyTask[]) => {
-            this.setDailyTasks(dailyTasks);
+            this.sortTasks(dailyTasks);
+            this.addSortedTasks();
+            this.setSortedDailyTasks(this.sortedDailyTasks);
         });
     }
 }
-

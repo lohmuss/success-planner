@@ -173,6 +173,38 @@ export class HabitsDataService {
         });
     }
 
+    addMissingWeeks() {
+        for (let habit of this.habits) {
+            if (!this.currentWeekExists(habit.weeks)) {
+                let currentWeekStart: Date = this.dateFunctions.getWeekStartDate();
+                let currentWeek: HabitWeek = new HabitWeek({weekStart: currentWeekStart});
+                this.addHabitWeek(habit.id, currentWeek);
+            }
+        } 
+    }
+
+    currentWeekExists(habitWeeks: HabitWeek[]) {
+        let currentWeek = this.dateFunctions.getWeekStartDate();
+        for (let habitWeek of habitWeeks) {
+            if (this.dateFunctions.areHabitsDatesEqual(currentWeek, habitWeek.weekStart)) {
+                return true
+            }
+        }
+        return false;
+    }
+    
+    getShownWeekHabits(shownWeek: Date): Habit[] {
+        let shownWeekHabits: Habit[] = [];
+        for (let habit of this.habits) {
+            for (let week of habit.weeks) {
+                if (this.dateFunctions.areHabitsDatesEqual(shownWeek, week.weekStart)) {
+                    shownWeekHabits.push(habit);
+                }
+            }
+        }
+        return shownWeekHabits;
+    }
+
     updateHabits() {
         idbHabits.getAll().then((habits: Habit[]) => {
             this.setHabits(habits);

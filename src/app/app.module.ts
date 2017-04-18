@@ -8,19 +8,9 @@ import 'hammerjs';
 
 import { ROUTER } from './app.router';
 import { AppComponent }  from './app.component';
-import { HomeComponent } from './home/home.component';
-import { HomeDailyTasksListComponent } from './home/home-daily-tasks-list/home-daily-tasks-list.component';
-import { HomeDailyHabitsListComponent } from './home/home-daily-habits-list/home-daily-habits-list.component';
-import { HomeDailyHabitsItemComponent } from './home/home-daily-habits-item/home-daily-habits-item.component';
-import { DailyTasksDialogComponent } from './daily-tasks/daily-tasks-dialog/daily-tasks-dialog.component';
-import { DailyTasksListComponent } from './daily-tasks/daily-tasks-list/daily-tasks-list.component';
-import { DailyTasksItemComponent } from './daily-tasks/daily-tasks-item/daily-tasks-item.component';
-import { HabitsListComponent } from './habits/habits-list/habits-list.component';
-import { HabitsItemComponent } from './habits/habits-item/habits-item.component';
-import { HabitsDialogComponent } from './habits/habits-dialog/habits-dialog.component';
-
-import { DailyTasksDataService } from './daily-tasks/shared/daily-tasks-data.service'
-import { HabitsDataService } from './habits/shared/habits-data.service'
+import { HomeModule } from './home/shared/home.module';
+import { HabitsModule } from './habits/shared/habits.module';
+import { DailyTasksModule } from './daily-tasks/shared/daily-tasks.module';
 
 @NgModule({
   imports: 
@@ -28,34 +18,18 @@ import { HabitsDataService } from './habits/shared/habits-data.service'
     BrowserModule, 
     FormsModule,
     BrowserAnimationsModule, 
-    ROUTER, 
+    ROUTER,
+    HomeModule,
+    HabitsModule,
+    DailyTasksModule,
     MaterialModule.forRoot(), 
     MdDialogModule.forRoot() 
   ],
   declarations: 
   [ 
-    AppComponent,
-    HomeComponent,
-    HomeDailyTasksListComponent,
-    HomeDailyHabitsListComponent,
-    HomeDailyHabitsItemComponent,
-    DailyTasksListComponent, 
-    DailyTasksItemComponent, 
-    DailyTasksDialogComponent,
-    HabitsListComponent,
-    HabitsItemComponent,
-    HabitsDialogComponent
+    AppComponent
   ],
-  providers:
-  [
-    DailyTasksDataService,
-    HabitsDataService
-  ],
-  bootstrap:    [ AppComponent ],
-  entryComponents: 
-  [ 
-    DailyTasksDialogComponent,
-    HabitsDialogComponent
-  ]
+  providers:[],
+  bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

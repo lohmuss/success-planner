@@ -23,39 +23,8 @@ export class HomeDailyHabitsListComponent implements OnInit {
     ngOnInit() {
         this._habitsDataService.habitsSource.subscribe((habits: Habit[]) => {
             this.habits = habits;
-            this.addMissingWeeks();
-            this.getShownWeekHabits(this.shownWeekDate);
+            this._habitsDataService.addMissingWeeks();
+            this.shownWeekHabits = this._habitsDataService.getShownWeekHabits(this.shownWeekDate);
         });
-    }
-
-    addMissingWeeks() {
-        for (let habit of this.habits) {
-            if (!this.currentWeekExists(habit.weeks)) {
-                let currentWeekStart: Date = this.dateFunctions.getWeekStartDate();
-                let currentWeek: HabitWeek = new HabitWeek({weekStart: currentWeekStart});
-                this._habitsDataService.addHabitWeek(habit.id, currentWeek);
-            }
-        } 
-    }
-
-    currentWeekExists(habitWeeks: HabitWeek[]) {
-        let currentWeek = this.dateFunctions.getWeekStartDate();
-        for (let habitWeek of habitWeeks) {
-            if (this.dateFunctions.areHabitsDatesEqual(currentWeek, habitWeek.weekStart)) {
-                return true
-            }
-        }
-        return false;
-    }
-    
-    getShownWeekHabits(shownWeek: Date) {
-        this.shownWeekHabits = [];
-        for (let habit of this.habits) {
-            for (let week of habit.weeks) {
-                if (this.dateFunctions.areHabitsDatesEqual(shownWeek, week.weekStart)) {
-                    this.shownWeekHabits.push(habit);
-                }
-            }
-        }
     }
 }

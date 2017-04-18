@@ -29,7 +29,7 @@ export class HabitsListComponent implements OnInit {
     ngOnInit() {
         this._habitsDataService.habitsSource.subscribe((habits: Habit[]) => {
             this.habits = habits;
-            this.addMissingWeeks();
+            this._habitsDataService.addMissingWeeks();
             this.getHabitsWeekStarts();
             this.updateShownHabitsAndDates();
         });
@@ -40,37 +40,6 @@ export class HabitsListComponent implements OnInit {
         config.data = {"isNewHabit": true};
 
         let dialogRef = this.dialog.open(HabitsDialogComponent, config); 
-    }
-
-    addMissingWeeks() {
-        for (let habit of this.habits) {
-            if (!this.currentWeekExists(habit.weeks)) {
-                let currentWeekStart: Date = this.dateFunctions.getWeekStartDate();
-                let currentWeek: HabitWeek = new HabitWeek({weekStart: currentWeekStart});
-                this._habitsDataService.addHabitWeek(habit.id, currentWeek);
-            }
-        } 
-    }
-
-    currentWeekExists(habitWeeks: HabitWeek[]) {
-        let currentWeek = this.dateFunctions.getWeekStartDate();
-        for (let habitWeek of habitWeeks) {
-            if (this.dateFunctions.areHabitsDatesEqual(currentWeek, habitWeek.weekStart)) {
-                return true
-            }
-        }
-        return false;
-    }
-    
-    getShownWeekHabits(shownWeek: Date) {
-        this.shownWeekHabits = [];
-        for (let habit of this.habits) {
-            for (let week of habit.weeks) {
-                if (this.dateFunctions.areHabitsDatesEqual(shownWeek, week.weekStart)) {
-                    this.shownWeekHabits.push(habit);
-                }
-            }
-        }
     }
 
     getHabitsWeekStarts() {
@@ -105,7 +74,7 @@ export class HabitsListComponent implements OnInit {
     }
 
     updateShownHabitsAndDates() {
-        this.getShownWeekHabits(this.shownWeekDate);
+        this.shownWeekHabits = this._habitsDataService.getShownWeekHabits(this.shownWeekDate);
         this.getPreviousWeekDate();
         this.getNextWeekDate();
     }

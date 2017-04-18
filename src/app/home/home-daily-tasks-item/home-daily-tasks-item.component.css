@@ -1,0 +1,7 @@
+.taskComplete {
+    text-decoration: line-through;
+}
+
+.completionButton {
+    height: initial !important;
+}

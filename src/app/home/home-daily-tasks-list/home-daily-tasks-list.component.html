@@ -6,14 +6,14 @@
         <span *ngIf="overdueTasks.length > 0">
             <h3 md-subheader>Overdue</h3>
             <md-list-item  *ngFor="let task of overdueTasks">
-                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+                <home-daily-tasks-item [dailyTask] = "task" class="task-row"></home-daily-tasks-item>
             </md-list-item>
             <md-divider></md-divider>
         </span>
         <span *ngIf="todaysTasks.length > 0">
             <h3 md-subheader>Today</h3>
             <md-list-item  *ngFor="let task of todaysTasks">
-                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
+                <home-daily-tasks-item [dailyTask] = "task" class="task-row"></home-daily-tasks-item>
             </md-list-item>
             <md-divider></md-divider>
         </span>

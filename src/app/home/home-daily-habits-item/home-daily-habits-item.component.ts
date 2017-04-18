@@ -7,7 +7,7 @@ import { DateFunctions } from '../../shared/date-functions';
 
 @Component({
     selector: 'home-daily-habits-item',
-    templateUrl: 'home-daily-habits-item.component.html'
+    templateUrl: './home-daily-habits-item.component.html'
 })
 export class HomeDailyHabitsItemComponent implements OnInit {
     dateFunctions = new DateFunctions();
