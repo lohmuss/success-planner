@@ -1,8 +1,22 @@
-<md-toolbar color="primary">
-    <span>Success Planner</span>
-</md-toolbar>
-<span>
-    <a md-raised-button [routerLink]="['dailytasks']">Daily Tasks</a>
-    <a md-raised-button [routerLink]="['habits']">Habits</a>
-</span>
-<router-outlet></router-outlet>
+<md-sidenav-container fullscreen>
+    <md-sidenav #sidenav [mode]="isScreenWide() ? 'side' : 'over'" [opened]="isScreenWide()">
+        <md-toolbar>
+            <md-toolbar-row>
+                <span [routerLink]="['']">Home</span>
+            </md-toolbar-row>
+            <md-toolbar-row>
+                <span [routerLink]="['dailytasks']">Daily Tasks</span>
+            </md-toolbar-row>
+            <md-toolbar-row>
+                <span md-raised-button [routerLink]="['habits']">Habits</span>
+            </md-toolbar-row>
+        </md-toolbar>
+    </md-sidenav>
+    <md-toolbar color="primary">
+        <span>Success Planner</span>
+        <button md-button (click)="sidenav.toggle()">
+            <md-icon>menu</md-icon>
+        </button>
+    </md-toolbar>
+    <router-outlet></router-outlet>
+</md-sidenav-container>
