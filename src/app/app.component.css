@@ -1,25 +1,25 @@
-.example-sidenav-fab-container {
-  width: 500px;
-  height: 300px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+body {
+  background-color: #eee;
 }
 
-.example-sidenav-fab-container md-sidenav {
-  max-width: 200px;
+md-sidenav {
+  min-width: 288px;
+  width: 288px;
 }
 
-.example-sidenav-fab-container .mat-sidenav-content,
-.example-sidenav-fab-container md-sidenav {
-  display: flex;
-  overflow: visible;
+md-sidenav button {
+  width: 100%;
+  text-align: left;
 }
 
-.example-scrolling-content {
-  overflow: auto;
+md-sidenav md-icon {
+  color: #737373;
+  padding-right: 15px;
 }
 
-.example-fab {
-  position: absolute;
-  right: 20px;
-  bottom: 10px;
+@media (max-width: 768px) {
+  md-sidenav {
+    min-width: 240px;
+    width: 240px;
+  }
 }

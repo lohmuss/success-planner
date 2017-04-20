@@ -6,10 +6,10 @@ import { Habit, HabitWeek } from '../../habits/shared/habit';
 import { DateFunctions } from '../../shared/date-functions';
 
 @Component({
-    selector: 'home-daily-habits-item',
-    templateUrl: './home-daily-habits-item.component.html'
+    selector: 'inbox-daily-habits-item',
+    templateUrl: './inbox-daily-habits-item.component.html'
 })
-export class HomeDailyHabitsItemComponent implements OnInit {
+export class InboxDailyHabitsItemComponent implements OnInit {
     dateFunctions = new DateFunctions();
     @Input() habit: Habit;
     @Input() shownWeekDate: Date;

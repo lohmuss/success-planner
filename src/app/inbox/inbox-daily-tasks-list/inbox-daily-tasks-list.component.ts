@@ -6,10 +6,11 @@ import { DailyTask } from '../../daily-tasks/shared/daily-task';
 import { DateFunctions } from '../../shared/date-functions';
 
 @Component({
-    selector: 'home-daily-tasks-list',
-    templateUrl: 'home-daily-tasks-list.component.html'
+    selector: 'inbox-daily-tasks-list',
+    templateUrl: 'inbox-daily-tasks-list.component.html',
+    styleUrls: ['inbox-daily-tasks-list.component.css']
 })
-export class HomeDailyTasksListComponent implements OnInit {
+export class InboxDailyTasksListComponent implements OnInit {
     dateFunctions = new DateFunctions();
     overdueTasks: DailyTask[] = [];
     todaysTasks: DailyTask[] = [];

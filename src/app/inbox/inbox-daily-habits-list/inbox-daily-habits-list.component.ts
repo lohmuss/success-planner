@@ -6,10 +6,11 @@ import { Habit, HabitWeek } from '../../habits/shared/habit';
 import { DateFunctions } from '../../shared/date-functions';
 
 @Component({
-    selector: 'home-daily-habits-list',
-    templateUrl: 'home-daily-habits-list.component.html'
+    selector: 'inbox-daily-habits-list',
+    templateUrl: 'inbox-daily-habits-list.component.html',
+    styleUrls: ['inbox-daily-habits-list.component.css']
 })
-export class HomeDailyHabitsListComponent implements OnInit {
+export class InboxDailyHabitsListComponent implements OnInit {
     dateFunctions = new DateFunctions();
     habits: Habit[] = [];
     shownWeekHabits: Habit[] = [];

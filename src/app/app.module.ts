@@ -8,7 +8,7 @@ import 'hammerjs';
 
 import { ROUTER } from './app.router';
 import { AppComponent }  from './app.component';
-import { HomeModule } from './home/shared/home.module';
+import { InboxModule } from './inbox/shared/inbox.module';
 import { HabitsModule } from './habits/shared/habits.module';
 import { DailyTasksModule } from './daily-tasks/shared/daily-tasks.module';
 
@@ -19,7 +19,7 @@ import { DailyTasksModule } from './daily-tasks/shared/daily-tasks.module';
     FormsModule,
     BrowserAnimationsModule, 
     ROUTER,
-    HomeModule,
+    InboxModule,
     HabitsModule,
     DailyTasksModule,
     MaterialModule.forRoot(), 
@@ -30,6 +30,6 @@ import { DailyTasksModule } from './daily-tasks/shared/daily-tasks.module';
     AppComponent
   ],
   providers:[],
-  bootstrap:    [ AppComponent ]
+  bootstrap:    [ AppComponent ],
 })
 export class AppModule { }
