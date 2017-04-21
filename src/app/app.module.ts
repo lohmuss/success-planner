@@ -12,6 +12,8 @@ import { InboxModule } from './inbox/shared/inbox.module';
 import { HabitsModule } from './habits/shared/habits.module';
 import { DailyTasksModule } from './daily-tasks/shared/daily-tasks.module';
 
+import { SidenavTitleService } from './shared/sidenav-title.service';
+
 @NgModule({
   imports: 
   [ 
@@ -29,7 +31,9 @@ import { DailyTasksModule } from './daily-tasks/shared/daily-tasks.module';
   [ 
     AppComponent
   ],
-  providers:[],
+  providers:[
+    SidenavTitleService
+  ],
   bootstrap:    [ AppComponent ],
 })
 export class AppModule { }

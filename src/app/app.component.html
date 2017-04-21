@@ -1,50 +1,54 @@
 <md-sidenav-container fullscreen>
+    <md-toolbar color="primary" class="main-toolbar">
+        <button md-button (click)="sidenav.toggle()">
+            <md-icon>menu</md-icon>
+        </button>
+        <span>{{ title }}</span>
+    </md-toolbar>
+    
     <md-sidenav #sidenav [mode]="isScreenWide() ? 'side' : 'over'" [opened]="isScreenWide()">
         <md-toolbar color="primary"></md-toolbar>
         <md-list>
             <md-list-item>
-                <button md-button [routerLink]="['']">
+                <button md-button [routerLink]="['']" (click)="setTitle('Inbox')">
                     <md-icon>inbox</md-icon>
                     <span>Inbox</span>
                 </button>
             </md-list-item>
             <md-list-item> 
-                <button md-button [routerLink]="['dailytasks']">
+                <button md-button [routerLink]="['dailytasks']" (click)="setTitle('Daily Tasks')">
                     <md-icon>storage</md-icon>
                     <span>Daily Tasks</span>
                 </button>
             </md-list-item>
             <md-list-item>
-                <button md-button >
+                <button md-button (click)="setTitle('Monthly Progress')">
                     <md-icon>assessment</md-icon>
                     <span>Monthly Progress</span>
                     </button>
             </md-list-item>
             <md-list-item>
-                <button md-button [routerLink]="['habits']">
+                <button md-button [routerLink]="['habits']" (click)="setTitle('Habits')">
                     <md-icon>event_available</md-icon>
                     <span>Habits</span>
                 </button>
             </md-list-item>
             <md-list-item>
-                <button md-button>
+                <button md-button (click)="setTitle('Settings')">
                     <md-icon>settings</md-icon>
                     <span>Settings</span>
                 </button>
             </md-list-item>
             <md-list-item>
-                <button md-button>
+                <button md-button (click)="setTitle('Info')">
                     <md-icon>info</md-icon>
                     <span>Info</span>
                 </button>
             </md-list-item>
         </md-list>
     </md-sidenav>
-    <md-toolbar color="primary">
-        <button md-button (click)="sidenav.toggle()">
-            <md-icon>menu</md-icon>
-        </button>
-        <span>Success Planner</span>
-    </md-toolbar>
-    <router-outlet></router-outlet>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
 </md-sidenav-container>
+

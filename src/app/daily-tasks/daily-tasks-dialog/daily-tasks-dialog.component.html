@@ -1,26 +1,42 @@
 <span *ngIf="data.isNewTask">
-    <h1 md-dialog-title>Add Daily Task</h1>
-    <div md-dialog-content>
-        <md-input-container>
-            <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
-            <input mdInput type="date" name="taskDate" [(ngModel)]="taskDate">
-        </md-input-container>
-    </div>
+    <md-toolbar color="primary">
+        <span>Add Daily Task</span>
+    </md-toolbar>
+    <table md-dialog-content>
+        <tr>
+            <md-input-container>
+                <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
+            </md-input-container>
+        </tr>
+        <tr>
+            <md-input-container>
+                <input mdInput type="date" name="taskDate" [(ngModel)]="taskDate">
+            </md-input-container>
+        </tr>
+    </table>
     <div md-dialog-actions>
-        <button md-raised-button color="primary" (click)="addTask()">Add</button>
+        <button md-button color="primary" (click)="addTask()">Add</button>
     </div>
 </span>
 
 <span *ngIf="!data.isNewTask">
-    <h1 md-dialog-title>Edit Daily Task</h1>
-    <div md-dialog-content>
-         <md-input-container>
-            <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
-            <input mdInput type="date" name="taskDate" [(ngModel)]="taskDate">
-        </md-input-container>
-    </div>
+    <md-toolbar color="primary">
+        <span>Edit Daily Task</span>
+    </md-toolbar>
+    <table md-dialog-content>
+        <tr>
+            <md-input-container>
+                <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
+            </md-input-container>
+        </tr>
+        <tr>
+            <md-input-container>
+                <input mdInput type="date" name="taskDate" [(ngModel)]="taskDate">
+            </md-input-container>
+        </tr>
+    </table>
     <div md-dialog-actions>
-        <button md-raised-button color="primary" (click)="editTask(data.taskId)">Edit</button>
-        <button md-raised-button color="warn" (click)="removeTask(data.taskId)">Delete</button>
+        <button md-button color="primary" (click)="editTask(data.taskId)">Edit</button>
+        <button md-button color="primary" (click)="removeTask(data.taskId)">Delete</button>
     </div>
 </span>

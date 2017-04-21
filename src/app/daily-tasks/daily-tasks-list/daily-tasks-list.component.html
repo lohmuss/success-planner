@@ -1,48 +1,60 @@
-<md-card>
-    <md-toolbar color="accent">
-        <span>Daily Tasks</span>
-    </md-toolbar>
-    <md-list>
-        <span *ngIf="overdueTasks.length > 0">
-            <h3 md-subheader>Overdue</h3>
-            <md-list-item  *ngFor="let task of overdueTasks">
-                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
-            </md-list-item>
-            <md-divider></md-divider>
-        </span>
-        <span *ngIf="todaysTasks.length > 0">
-            <h3 md-subheader>Today</h3>
-            <md-list-item  *ngFor="let task of todaysTasks">
-                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
-            </md-list-item>
-            <md-divider></md-divider>
-        </span>
-        <span *ngIf="tomorrowsTasks.length > 0">
-            <h3 md-subheader>Tomorrow</h3>
-            <md-list-item  *ngFor="let task of tomorrowsTasks">
-                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
-            </md-list-item>
-            <md-divider></md-divider>
-        </span>
-        <span *ngIf="laterTasks.length > 0">
-            <h3 md-subheader>Later</h3>
-            <md-list-item  *ngFor="let task of laterTasks">
-                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
-            </md-list-item>
-            <md-divider></md-divider>
-        </span>
-        <span *ngIf="withoutDateTasks.length > 0">
-            <h3 md-subheader>Without Date</h3>
-            <md-list-item  *ngFor="let task of withoutDateTasks">
-                <daily-tasks-item [dailyTask] = "task" class="task-row"></daily-tasks-item>
-            </md-list-item>
-            <md-divider></md-divider>
-        </span>
-    </md-list>
-
-    <span class="newTaskButton">
-        <button md-fab (click)="openNewDailyTaskDialog()">
-            <md-icon>add</md-icon>
-        </button>
-    </span>
+<md-card *ngIf="overdueTasks.length > 0">
+    <md-card-subtitle>Overdue</md-card-subtitle>
+    <md-card-content>
+        <md-list>
+            <daily-tasks-item *ngFor="let task of overdueTasks; let taskIndex = index" 
+            [dailyTask]="task" [lastTask]="taskIndex === overdueTasks.length-1">
+            </daily-tasks-item>
+        </md-list>
+    </md-card-content>
 </md-card>
+
+<md-card *ngIf="todaysTasks.length > 0">
+    <md-card-subtitle>Today</md-card-subtitle>
+    <md-card-content>
+        <md-list>
+            <daily-tasks-item *ngFor="let task of todaysTasks; let taskIndex = index" 
+            [dailyTask]="task" [lastTask]="taskIndex===todaysTasks.length-1">
+            </daily-tasks-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+<md-card *ngIf="tomorrowsTasks.length > 0">
+    <md-card-subtitle>Tomorrow</md-card-subtitle>
+    <md-card-content>
+        <md-list>
+            <daily-tasks-item *ngFor="let task of tomorrowsTasks; let taskIndex = index" 
+            [dailyTask]="task" [lastTask]="taskIndex === tomorrowsTasks.length-1">
+            </daily-tasks-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+<md-card *ngIf="laterTasks.length > 0">
+    <md-card-subtitle>Later</md-card-subtitle>
+    <md-card-content>
+        <md-list>
+            <daily-tasks-item *ngFor="let task of laterTasks; let taskIndex = index" 
+            [dailyTask]="task" [lastTask]="taskIndex === laterTasks.length-1">
+            </daily-tasks-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+<md-card *ngIf="withoutDateTasks.length > 0">
+    <md-card-subtitle>Without Date</md-card-subtitle>
+    <md-card-content>
+        <md-list>
+            <daily-tasks-item *ngFor="let task of withoutDateTasks; let taskIndex = index" 
+            [dailyTask]="task" [lastTask]="taskIndex === withoutDateTasks.length-1">
+            </daily-tasks-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+<span class="newTaskButton">
+    <button md-fab (click)="openNewDailyTaskDialog()">
+        <md-icon>add</md-icon>
+    </button>
+</span>

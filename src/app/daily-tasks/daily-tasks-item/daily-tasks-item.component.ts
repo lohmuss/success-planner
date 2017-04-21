@@ -13,10 +13,11 @@ import { DailyTask } from '../shared/daily-task';
 })
 export class DailyTasksItemComponent implements OnInit {
     @Input() dailyTask: DailyTask;
+    @Input() lastTask: boolean;
 
     constructor(private _dailyTasksDataService: DailyTasksDataService, public dialog: MdDialog) { }
 
-    ngOnInit() { }
+    ngOnInit() {}
 
     changeTaskCompletion(dailyTaskId: number) {
         this._dailyTasksDataService.changeDailyTaskCompletion(dailyTaskId);

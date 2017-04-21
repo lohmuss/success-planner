@@ -1,15 +1,23 @@
 import { Component, HostListener } from '@angular/core';
 
+import { SidenavTitleService } from './shared/sidenav-title.service';
+
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  { 
-  constructor ( ) {
-  }
-  
+  title: string;
+
   @HostListener('window:resize') onWindowReSize() {}
+
+  constructor (private _sidenavTitleService: SidenavTitleService) {
+      this._sidenavTitleService.titleSource.subscribe((title: string) => {
+          this.title = title;
+      });
+      this._sidenavTitleService.setTitle("Inbox");
+  }
 
   isScreenWide() {
       let width: number = this.getScreenWidth();
@@ -22,5 +30,9 @@ export class AppComponent  {
   getScreenWidth(): number {
       let width: number = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
       return width;
+  }
+
+  setTitle(title: string) {
+    this._sidenavTitleService.setTitle(title);
   }
 }

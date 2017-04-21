@@ -1,8 +1,10 @@
-<md-list-item>
-    <md-icon mat-list-avatar class="completionButton" *ngIf="!dailyTask.complete" (click)="changeTaskCompletion(dailyTask.id)">check_box_outline_blank</md-icon>
-    <md-icon mat-list-avatar class="completionButton" *ngIf="dailyTask.complete" (click)="changeTaskCompletion(dailyTask.id)">check_box</md-icon>
+<md-list-item [ngClass]="{'last-task': !lastTask}">
+    <md-icon md-list-avatar class="completionButton" *ngIf="!dailyTask.complete" (click)="changeTaskCompletion(dailyTask.id)">check_box_outline_blank</md-icon>
+    <md-icon md-list-avatar class="completionButton" *ngIf="dailyTask.complete" (click)="changeTaskCompletion(dailyTask.id)">check_box</md-icon>
 
-    <h4 md-line [ngClass]="{'taskComplete': dailyTask.complete, 'taskTitle': true}" (click)=" openEditDailyTaskDialog(dailyTask.id)">
-        {{ dailyTask.title }}
+    <h4 md-line [ngClass]="{'taskComplete': dailyTask.complete, 'taskTitle': true}">
+    {{ dailyTask.title }}
     </h4>
-<md-list-item>
+    <h3 md-line>{{ dailyTask.date | date: 'dd/MM/yyyy' }}</h3>
+    <md-icon (click)="openEditDailyTaskDialog(dailyTask.id)">more_vert</md-icon>
+</md-list-item>

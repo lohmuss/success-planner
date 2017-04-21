@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 
-import { HabitsDialogComponent } from '../habits-dialog/habits-dialog.component'
-import { HabitsDataService } from '../shared/habits-data.service';
-
 import { Habit, HabitWeek } from '../shared/habit';
 import { DateFunctions } from '../../shared/date-functions';
+
+import { HabitsDialogComponent } from '../habits-dialog/habits-dialog.component'
+import { HabitsDataService } from '../shared/habits-data.service';
+import { SidenavTitleService } from '../../shared/sidenav-title.service';
 
 @Component({
     selector: 'habits-list',
@@ -21,7 +22,10 @@ export class HabitsListComponent implements OnInit {
     previousWeekDate: Date;
     nextWeekDate: Date;
 
-    constructor(private _habitsDataService: HabitsDataService, public dialog: MdDialog) { 
+    constructor(private _habitsDataService: HabitsDataService, 
+                private _sidenavTitleService: SidenavTitleService,
+                public dialog: MdDialog) {
+        this._sidenavTitleService.setTitle("Habits");
         this._habitsDataService.updateHabits();
         this.shownWeekDate = this.dateFunctions.getWeekStartDate();
     }

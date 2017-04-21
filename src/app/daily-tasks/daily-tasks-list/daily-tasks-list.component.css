@@ -1,15 +1,19 @@
-h3 {
-    font-family: Roboto,"Helvetica Neue",sans-serif;
+md-card {
+    margin: 25px;
 }
 
-.task-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+md-card-subtitle {
+    color: red;
 }
 
 .newTaskButton {
     position: fixed;
     bottom: 20px;
     right: 20px;
+}
+
+@media (max-width: 768px) {
+    md-card {
+        margin: 15px;
+    }
 }

@@ -1,5 +1,7 @@
-body {
-  background-color: #eee;
+.content {
+  background: #F5F5F5;
+  height: calc(100% - 64px);
+  overflow: auto;
 }
 
 md-sidenav {

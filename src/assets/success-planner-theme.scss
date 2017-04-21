@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$success-planner-primary: mat-palette($mat-light-green);
+$success-planner-accent: mat-palette($mat-light-blue);
+
+$success-planner-warn: mat-palette($mat-red);
+
+$success-planner-theme: mat-light-theme($success-planner-primary, $success-planner-accent, $success-planner-warn);
+
+@include angular-material-theme($success-planner-theme);

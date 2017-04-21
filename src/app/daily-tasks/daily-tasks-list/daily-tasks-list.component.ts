@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { DailyTask } from '../shared/daily-task';
-
 import { DailyTasksDataService } from '../shared/daily-tasks-data.service'
+import { SidenavTitleService } from '../../shared/sidenav-title.service'
+
+import { DailyTask } from '../shared/daily-task';
 import { DailyTasksDialogComponent } from '../daily-tasks-dialog/daily-tasks-dialog.component'
 
 @Component({
@@ -21,7 +22,10 @@ export class DailyTasksListComponent implements OnInit {
     
     isNewTask: boolean = true;
 
-    constructor(private _dailyTasksDataService: DailyTasksDataService, public dialog: MdDialog) {
+    constructor(private _dailyTasksDataService: DailyTasksDataService,
+                private _sidenavTitleService: SidenavTitleService,
+                public dialog: MdDialog) {
+        this._sidenavTitleService.setTitle("Daily Tasks");
         this._dailyTasksDataService.updateDailyTasks();
     }
 
