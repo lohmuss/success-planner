@@ -1,14 +1,21 @@
-<span>
-    <md-card>
-        <md-card-header>
-            <md-card-title (click)="openEditHabitDialog(habit.id)">{{ habit.title }}</md-card-title>
-        </md-card-header>
-        <md-card-actions *ngIf="shownWeek">
-            <span *ngFor="let day of shownWeek.days; let dayIndex = index">
-                <span>{{weekDays[dayIndex]}}</span>
+<md-card>
+    <md-card-header>
+        <md-card-title>{{ habit.title }}</md-card-title>
+        <md-icon (click)="openEditHabitDialog(habit.id)">more_vert</md-icon>
+    </md-card-header>
+
+    <md-card-content>
+        <table md-line *ngIf="shownWeek">
+            <tr>
+                <td *ngFor="let weekDay of weekDays">{{ weekDay }}</td>
+            </tr>
+            <tr>
+            <td *ngFor="let day of shownWeek.days; let dayIndex = index">
                 <md-icon mat-list-avatar *ngIf="!day" (click)="changeHabitCompletion(habit.id, dayIndex, shownWeek)">check_box_outline_blank</md-icon>
                 <md-icon mat-list-avatar *ngIf="day" (click)="changeHabitCompletion(habit.id, dayIndex, shownWeek)">check_box</md-icon>
-            </span>
-        </md-card-actions>
-    </md-card>
-<span>
+            </td>
+            </tr>
+        </table>
+    </md-card-content>
+</md-card>
+

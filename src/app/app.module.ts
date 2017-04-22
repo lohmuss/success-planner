@@ -8,9 +8,11 @@ import 'hammerjs';
 
 import { ROUTER } from './app.router';
 import { AppComponent }  from './app.component';
+import { InfoComponent } from './info/info.component';
 import { InboxModule } from './inbox/shared/inbox.module';
 import { HabitsModule } from './habits/shared/habits.module';
 import { DailyTasksModule } from './daily-tasks/shared/daily-tasks.module';
+import { MonthlyProgressModule } from './monthly-progress/shared/monthly-progress.module';
 
 import { SidenavTitleService } from './shared/sidenav-title.service';
 
@@ -24,12 +26,14 @@ import { SidenavTitleService } from './shared/sidenav-title.service';
     InboxModule,
     HabitsModule,
     DailyTasksModule,
+    MonthlyProgressModule,
     MaterialModule.forRoot(), 
     MdDialogModule.forRoot() 
   ],
   declarations: 
   [ 
-    AppComponent
+    AppComponent,
+    InfoComponent
   ],
   providers:[
     SidenavTitleService

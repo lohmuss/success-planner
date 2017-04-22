@@ -2,8 +2,8 @@ md-card {
     margin: 25px;
 }
 
-md-card-subtitle {
-    color: red;
+md-card-title {
+    color: #00BCD4;
 }
 
 .newTaskButton {

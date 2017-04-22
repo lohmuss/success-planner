@@ -1,0 +1,11 @@
+md-icon {
+    color: #737373;
+}
+
+md-icon {
+    height: initial !important;
+}
+
+.habit-border {
+    border-bottom: 1px solid #e0e0e0;
+}

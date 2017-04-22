@@ -1,0 +1,31 @@
+md-icon {
+    color: #737373;
+}
+
+md-card {
+    margin: 10px 25px 10px 25px;
+}
+
+md-card-header md-icon {
+    position: absolute;
+    right: 35px;
+}
+
+md-card-content {
+    margin-top: 1%;
+    margin-left: 1%;
+}
+
+md-card-content table {
+    width: 30%;
+}
+
+@media (max-width: 768px) {
+    md-card-content {
+        margin-top: 5%;
+    }
+
+    md-card-content table {
+        width: 100%;
+    }
+}

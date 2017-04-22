@@ -32,7 +32,10 @@ export class AppComponent  {
       return width;
   }
 
-  setTitle(title: string) {
+  changeView(sidenav: any, title: string) {
     this._sidenavTitleService.setTitle(title);
+    if (sidenav.mode == "over") {
+        sidenav.toggle();
+    }
   }
 }

@@ -1,3 +1,7 @@
 md-card {
-    background: #eee;
+    margin: 25px;
+}
+
+md-card-title {
+    color: #00BCD4;
 }

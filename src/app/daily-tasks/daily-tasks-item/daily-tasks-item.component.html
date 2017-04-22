@@ -1,4 +1,4 @@
-<md-list-item [ngClass]="{'last-task': !lastTask}">
+<md-list-item [ngClass]="{'task-border': !lastTask}">
     <md-icon md-list-avatar class="completionButton" *ngIf="!dailyTask.complete" (click)="changeTaskCompletion(dailyTask.id)">check_box_outline_blank</md-icon>
     <md-icon md-list-avatar class="completionButton" *ngIf="dailyTask.complete" (click)="changeTaskCompletion(dailyTask.id)">check_box</md-icon>
 

@@ -7,12 +7,14 @@ import { DateFunctions } from '../../shared/date-functions';
 
 @Component({
     selector: 'inbox-daily-habits-item',
-    templateUrl: './inbox-daily-habits-item.component.html'
+    templateUrl: './inbox-daily-habits-item.component.html',
+    styleUrls: ['./inbox-daily-habits-item.component.css']
 })
 export class InboxDailyHabitsItemComponent implements OnInit {
     dateFunctions = new DateFunctions();
     @Input() habit: Habit;
     @Input() shownWeekDate: Date;
+    @Input() lastHabit: boolean;
     shownWeek: HabitWeek;
     shownDay: number;
 

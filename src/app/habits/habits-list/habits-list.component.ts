@@ -19,6 +19,7 @@ export class HabitsListComponent implements OnInit {
     weekStarts: Date[] = [];
     shownWeekHabits: Habit[] = [];
     shownWeekDate: Date;
+    shownWeekDateEnd: Date;
     previousWeekDate: Date;
     nextWeekDate: Date;
 
@@ -28,13 +29,14 @@ export class HabitsListComponent implements OnInit {
         this._sidenavTitleService.setTitle("Habits");
         this._habitsDataService.updateHabits();
         this.shownWeekDate = this.dateFunctions.getWeekStartDate();
+        this.setShownWeekDateEnd();
     }
 
     ngOnInit() {
         this._habitsDataService.habitsSource.subscribe((habits: Habit[]) => {
             this.habits = habits;
             this._habitsDataService.addMissingWeeks();
-            this.getHabitsWeekStarts();
+            this.setHabitsWeekStarts();
             this.updateShownHabitsAndDates();
         });
     }
@@ -46,7 +48,12 @@ export class HabitsListComponent implements OnInit {
         let dialogRef = this.dialog.open(HabitsDialogComponent, config); 
     }
 
-    getHabitsWeekStarts() {
+    setShownWeekDateEnd() {
+        this.shownWeekDateEnd = new Date();
+        this.shownWeekDateEnd.setDate(this.shownWeekDate.getDate() + 7);
+    }
+
+    setHabitsWeekStarts() {
         for (let habit of this.habits) {
             for (let habitWeek of habit.weeks) {
                 let weekStart: Date = habitWeek.weekStart;
@@ -79,18 +86,19 @@ export class HabitsListComponent implements OnInit {
 
     updateShownHabitsAndDates() {
         this.shownWeekHabits = this._habitsDataService.getShownWeekHabits(this.shownWeekDate);
-        this.getPreviousWeekDate();
-        this.getNextWeekDate();
+        this.setPreviousWeekDate();
+        this.setNextWeekDate();
+        this.setShownWeekDateEnd();
     }
 
-    getPreviousWeekDate() {
+    setPreviousWeekDate() {
         let shownWeekIndex = this.getWeekIndex();
         shownWeekIndex--;
         let previousWeekDate = this.weekStarts[shownWeekIndex];
         this.previousWeekDate = previousWeekDate;
     }
 
-    getNextWeekDate() {
+    setNextWeekDate() {
         let shownWeekIndex = this.getWeekIndex();
         shownWeekIndex++;
         let nextWeekDate = this.weekStarts[shownWeekIndex];

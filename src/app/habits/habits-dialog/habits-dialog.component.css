@@ -1,0 +1,33 @@
+md-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+md-input-container {
+    width: 100%;
+}
+
+.mat-dialog-content {
+    margin-top: 64px;
+    width: 400px;
+}
+
+button {
+    text-transform: uppercase;
+}
+
+.mat-dialog-actions {
+    float: right;
+}
+
+@media (max-width: 768px) {
+    md-input-container {
+        width: 100%;
+    }
+
+    .mat-dialog-content {
+        margin-top: 64px;
+        width: 200px;
+    }
+}

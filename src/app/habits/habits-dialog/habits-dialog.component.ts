@@ -8,7 +8,8 @@ import { DateFunctions } from '../../shared/date-functions';
 
 @Component({
     selector: 'habits-dialog',
-    templateUrl: './habits-dialog.component.html'
+    templateUrl: './habits-dialog.component.html',
+    styleUrls: ['./habits-dialog.component.css']
 })
 export class HabitsDialogComponent implements OnInit {
     dateFunctions = new DateFunctions();

@@ -9,7 +9,8 @@ import { DateFunctions } from '../../shared/date-functions';
 
 @Component({
     selector: 'habits-item',
-    templateUrl: 'habits-item.component.html'
+    templateUrl: 'habits-item.component.html',
+    styleUrls: ['habits-item.component.css']
 })
 export class HabitsItemComponent implements OnInit {
     dateFunctions = new DateFunctions();

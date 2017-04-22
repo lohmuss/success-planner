@@ -11,6 +11,8 @@ import { DailyTask } from '../../daily-tasks/shared/daily-task';
 })
 export class InboxDailyTasksItemComponent implements OnInit {
     @Input() dailyTask: DailyTask;
+    @Input() lastTask: boolean;
+    @Input() overdue: boolean;
 
     constructor(private _dailyTasksDataService: DailyTasksDataService) { }
 

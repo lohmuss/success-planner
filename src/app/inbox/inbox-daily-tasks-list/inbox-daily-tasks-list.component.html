@@ -1,21 +1,15 @@
 <md-card>
-    <md-toolbar color="accent">
-        <span>Daily Tasks</span>
-    </md-toolbar>
-    <md-list>
-        <span *ngIf="overdueTasks.length > 0">
-            <h3 md-subheader>Overdue</h3>
-            <md-list-item  *ngFor="let task of overdueTasks">
-                <inbox-daily-tasks-item [dailyTask] = "task" class="task-row"></inbox-daily-tasks-item>
-            </md-list-item>
-            <md-divider></md-divider>
-        </span>
-        <span *ngIf="todaysTasks.length > 0">
-            <h3 md-subheader>Today</h3>
-            <md-list-item  *ngFor="let task of todaysTasks">
-                <inbox-daily-tasks-item [dailyTask] = "task" class="task-row"></inbox-daily-tasks-item>
-            </md-list-item>
-            <md-divider></md-divider>
-        </span>
-    </md-list>
+    <md-card-title>Daily Tasks</md-card-title>
+    <md-card-content>
+        <md-list>
+            <span *ngIf="overdueTasks.length > 0">
+                <inbox-daily-tasks-item *ngFor="let task of overdueTasks" [dailyTask]="task" [overdue]="true"></inbox-daily-tasks-item>
+            </span>
+            <span *ngIf="todaysTasks.length > 0">
+                <inbox-daily-tasks-item *ngFor="let task of todaysTasks; let taskIndex = index" 
+                [dailyTask]="task" [overdue]="false" [lastTask]="taskIndex === todaysTasks.length-1">
+                </inbox-daily-tasks-item>
+            </span>
+        </md-list>
+    </md-card-content>
 </md-card>

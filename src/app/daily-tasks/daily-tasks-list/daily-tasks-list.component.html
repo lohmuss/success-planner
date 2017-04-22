@@ -1,5 +1,5 @@
 <md-card *ngIf="overdueTasks.length > 0">
-    <md-card-subtitle>Overdue</md-card-subtitle>
+    <md-card-title>Overdue</md-card-title>
     <md-card-content>
         <md-list>
             <daily-tasks-item *ngFor="let task of overdueTasks; let taskIndex = index" 
@@ -10,7 +10,7 @@
 </md-card>
 
 <md-card *ngIf="todaysTasks.length > 0">
-    <md-card-subtitle>Today</md-card-subtitle>
+    <md-card-title>Today</md-card-title>
     <md-card-content>
         <md-list>
             <daily-tasks-item *ngFor="let task of todaysTasks; let taskIndex = index" 
@@ -21,7 +21,7 @@
 </md-card>
 
 <md-card *ngIf="tomorrowsTasks.length > 0">
-    <md-card-subtitle>Tomorrow</md-card-subtitle>
+    <md-card-title>Tomorrow</md-card-title>
     <md-card-content>
         <md-list>
             <daily-tasks-item *ngFor="let task of tomorrowsTasks; let taskIndex = index" 
@@ -32,7 +32,7 @@
 </md-card>
 
 <md-card *ngIf="laterTasks.length > 0">
-    <md-card-subtitle>Later</md-card-subtitle>
+    <md-card-title>Later</md-card-title>
     <md-card-content>
         <md-list>
             <daily-tasks-item *ngFor="let task of laterTasks; let taskIndex = index" 
@@ -43,7 +43,7 @@
 </md-card>
 
 <md-card *ngIf="withoutDateTasks.length > 0">
-    <md-card-subtitle>Without Date</md-card-subtitle>
+    <md-card-title>Without Date</md-card-title>
     <md-card-content>
         <md-list>
             <daily-tasks-item *ngFor="let task of withoutDateTasks; let taskIndex = index" 

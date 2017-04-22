@@ -10,37 +10,39 @@
         <md-toolbar color="primary"></md-toolbar>
         <md-list>
             <md-list-item>
-                <button md-button [routerLink]="['']" (click)="setTitle('Inbox')">
+                <button md-button [routerLink]="['']" (click)="changeView(sidenav, 'Inbox')">
                     <md-icon>inbox</md-icon>
                     <span>Inbox</span>
                 </button>
             </md-list-item>
             <md-list-item> 
-                <button md-button [routerLink]="['dailytasks']" (click)="setTitle('Daily Tasks')">
+                <button md-button [routerLink]="['daily-tasks']" (click)="changeView(sidenav, 'Daily Tasks')">
                     <md-icon>storage</md-icon>
                     <span>Daily Tasks</span>
                 </button>
             </md-list-item>
             <md-list-item>
-                <button md-button (click)="setTitle('Monthly Progress')">
+                <button md-button [routerLink]="['monthly-progress']" (click)="changeView(sidenav, 'Monthly Progress')">
                     <md-icon>assessment</md-icon>
                     <span>Monthly Progress</span>
                     </button>
             </md-list-item>
             <md-list-item>
-                <button md-button [routerLink]="['habits']" (click)="setTitle('Habits')">
+                <button md-button [routerLink]="['habits']" (click)="changeView(sidenav, 'Habits')">
                     <md-icon>event_available</md-icon>
                     <span>Habits</span>
                 </button>
             </md-list-item>
+            <!--
             <md-list-item>
-                <button md-button (click)="setTitle('Settings')">
+                <button md-button (click)="changeView('Settings')">
                     <md-icon>settings</md-icon>
                     <span>Settings</span>
                 </button>
             </md-list-item>
+            -->
             <md-list-item>
-                <button md-button (click)="setTitle('Info')">
+                <button md-button [routerLink]="['info']" (click)="changeView(sidenav, 'Info')">
                     <md-icon>info</md-icon>
                     <span>Info</span>
                 </button>

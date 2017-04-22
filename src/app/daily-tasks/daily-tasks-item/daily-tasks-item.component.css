@@ -6,7 +6,7 @@ md-list-item h3 {
     color: #737373;
 }
 
-.last-task {
+.task-border {
     border-bottom: 1px solid #e0e0e0;
 }
 
