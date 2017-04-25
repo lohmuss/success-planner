@@ -1,0 +1,31 @@
+<md-card>
+        <md-card-title>{{ shownMonthDate | date: 'MMMM yyyy' }}</md-card-title>
+        
+        <md-card-subtitle>
+            <button  md-raised-button color="primary" [disabled]="!previousMonthDate" (click)="changeToPreviousMonth()">
+                <md-icon>arrow_back</md-icon>
+                <span>Previous</span>
+            </button>
+            <button  md-raised-button color="primary" [disabled]="!nextMonthDate" (click)="changeToNextMonth()">
+                <md-icon>arrow_forward</md-icon>
+                <span>Next</span>
+            </button>
+        </md-card-subtitle>
+</md-card>
+
+<md-card *ngIf="shownMonthlyTasks.length > 0">
+    <md-card-title>Monthly Tasks</md-card-title>
+    <md-card-content>
+        <md-list>
+            <monthly-tasks-item *ngFor="let task of shownMonthlyTasks; let taskIndex = index" 
+            [month]="shownMonth" [monthlyTask]="task" [lastTask]="taskIndex === shownMonthlyTasks.length-1">
+            </monthly-tasks-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+<span class="newMonthlyTaskButton">
+    <button md-fab (click)="openNewMonthlyTaskDialog()">
+        <md-icon>add</md-icon>
+    </button>
+</span>

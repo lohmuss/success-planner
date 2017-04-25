@@ -1,0 +1,9 @@
+<md-list-item [ngClass]="{'task-border': !lastTask}">
+    <md-icon md-list-avatar class="completionButton" *ngIf="!monthlyTask.complete" (click)="changeTaskCompletion(month.id, monthlyTask.id)">check_box_outline_blank</md-icon>
+    <md-icon md-list-avatar class="completionButton" *ngIf="monthlyTask.complete" (click)="changeTaskCompletion(month.id, monthlyTask.id)">check_box</md-icon>
+
+    <h4 md-line [ngClass]="{'taskComplete': monthlyTask.complete, 'taskTitle': true}">
+    {{ monthlyTask.title }}
+    </h4>
+    <md-icon (click)="openEditMonthlyTaskDialog(month.id, monthlyTask.id)">more_vert</md-icon>
+</md-list-item>

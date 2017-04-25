@@ -1,0 +1,32 @@
+<span *ngIf="data.isNewTask">
+    <md-toolbar color="accent">
+        <span>Add Monthly Task</span>
+    </md-toolbar>
+    <table md-dialog-content>
+        <tr>
+            <md-input-container>
+                <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
+            </md-input-container>
+        </tr>
+    </table>
+    <div md-dialog-actions>
+        <button md-button color="primary" (click)="addTask()">Add</button>
+    </div>
+</span>
+
+<span *ngIf="!data.isNewTask">
+    <md-toolbar color="accent">
+        <span>Edit Monthly Task</span>
+    </md-toolbar>
+    <table md-dialog-content>
+        <tr>
+            <md-input-container>
+                <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
+            </md-input-container>
+        </tr>
+    </table>
+    <div md-dialog-actions>
+        <button md-button color="primary" (click)="editTask(data.monthId, data.taskId)">Edit</button>
+        <button md-button color="primary" (click)="removeTask(data.monthId, data.taskId)">Delete</button>
+    </div>
+</span>

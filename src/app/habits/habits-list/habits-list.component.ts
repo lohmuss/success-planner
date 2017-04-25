@@ -66,8 +66,8 @@ export class HabitsListComponent implements OnInit {
     }
 
     isWeekStartUnique(weekStart: Date): boolean {
-        for (let weekStart2 of this.weekStarts) {
-            if (this.dateFunctions.areHabitsDatesEqual(weekStart, weekStart2)) {
+        for (let start of this.weekStarts) {
+            if (this.dateFunctions.areHabitsDatesEqual(weekStart, start)) {
                 return false;
             }
         }

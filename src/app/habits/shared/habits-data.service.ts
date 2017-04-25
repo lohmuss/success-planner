@@ -10,6 +10,7 @@ let idb = require("idb");
 const dbPromise = idb.open('success-planner-store', 1, (upgradeDB: any) => {
     upgradeDB.createObjectStore('daily-tasks');
     upgradeDB.createObjectStore('habits');
+    upgradeDB.createObjectStore('monthly-tasks');
 });
 
 const idbHabits = {

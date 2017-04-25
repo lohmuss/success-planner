@@ -6,6 +6,11 @@ import { MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MonthlyProgressComponent } from '../monthly-progress.component';
+import { MonthlyTasksDialogComponent } from '../monthly-tasks-dialog/monthly-tasks-dialog.component';
+import { MonthlyTasksListComponent } from '../monthly-tasks-list/monthly-tasks-list.component';
+import { MonthlyTasksItemComponent } from '../monthly-tasks-item/monthly-tasks-item.component';
+
+import { MonthlyTasksDataService } from '../shared/monthly-tasks-data.service';
 
 @NgModule({
     imports: 
@@ -17,7 +22,20 @@ import { MonthlyProgressComponent } from '../monthly-progress.component';
         MaterialModule.forRoot() 
     ],
     exports: [],
-    declarations: [MonthlyProgressComponent],
-    providers: [],
+    declarations: 
+    [
+        MonthlyProgressComponent,
+        MonthlyTasksDialogComponent,
+        MonthlyTasksListComponent,
+        MonthlyTasksItemComponent
+    ],
+    providers: 
+    [
+        MonthlyTasksDataService
+    ],
+    entryComponents: 
+    [ 
+        MonthlyTasksDialogComponent
+    ]
 })
 export class MonthlyProgressModule { }

@@ -29,6 +29,15 @@ export class DateFunctions {
         return weekStartDate;
     }
 
+    getMonthStartDate(): Date {
+        let todaysDate: Date = new Date();
+        let dateYear: number = todaysDate.getFullYear();
+        let dateMonth: number = todaysDate.getMonth();
+
+        let monthStartDate: Date = new Date(dateYear, dateMonth, 1);
+        return monthStartDate;
+    }
+
     getTodaysDate(): Date {
         let todaysDate = new Date();
         return todaysDate;
