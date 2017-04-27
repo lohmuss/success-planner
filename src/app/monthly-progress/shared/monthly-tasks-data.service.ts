@@ -100,7 +100,9 @@ export class MonthlyTasksDataService {
     addMonth(month: Month) {
         this.getNewMonthId().then((newMonthId: number) => {
             month.id = newMonthId;
+            month.monthlyTasks = [];
             month.monthStart = this.dateFunctions.getMonthStartDate();
+            
             idbMonthlyTasks.set(month.id, month).then(() => {
                 this.updateMonths();
             });
@@ -121,9 +123,27 @@ export class MonthlyTasksDataService {
         });
     }
 
+    addMonthlyTask(monthId: number, monthlyTask: MonthlyTask) {
+        idbMonthlyTasks.get(monthId).then((month: Month) => {
+            let updatedMonth: Month = month;
+            
+            this.getNewMonthlyTaskId(monthId).then((newTaskId: number) => {
+                monthlyTask.id = newTaskId;
+                monthlyTask.complete = false;
+                updatedMonth.monthlyTasks.push(monthlyTask);
+                
+                idbMonthlyTasks.set(monthId, updatedMonth).then(() => {
+                    this.updateMonths();
+                });;
+            });
+        });
+    }
+
     removeMonthlyTask(monthId: number, taskId: number) {
         idbMonthlyTasks.get(monthId).then((month: Month) => {
-            month.monthlyTasks.splice(taskId, 1);
+            let taskKey = this.getMonthlyTaskArrayKey(month.monthlyTasks, taskId);
+            month.monthlyTasks.splice(taskKey, 1);
+            
             idbMonthlyTasks.set(monthId, month).then(() => {
                 this.updateMonths();
             });;
@@ -133,25 +153,13 @@ export class MonthlyTasksDataService {
     editMonthlyTask(monthId: number, updatedMontlyTask: MonthlyTask) {
         idbMonthlyTasks.get(monthId).then((month: Month) => {
             let taskId = updatedMontlyTask.id;
-            updatedMontlyTask.complete = month.monthlyTasks[taskId].complete;
-            month.monthlyTasks[taskId] = updatedMontlyTask;
+            let taskKey = this.getMonthlyTaskArrayKey(month.monthlyTasks, taskId);
+            updatedMontlyTask.complete = month.monthlyTasks[taskKey].complete;
+            month.monthlyTasks[taskKey] = updatedMontlyTask;
+            
             idbMonthlyTasks.set(monthId, month).then(() => {
                 this.updateMonths();
             });;
-        });
-    }
-
-    addMonthlyTask(monthId: number, monthlyTask: MonthlyTask) {
-        idbMonthlyTasks.get(monthId).then((month: Month) => {
-            let updatedMonth: Month = month;
-            this.getNewMonthlyTaskId(monthId).then((newTaskId: number) => {
-                monthlyTask.id = newTaskId;
-                monthlyTask.complete = false;
-                updatedMonth.monthlyTasks.push(monthlyTask);
-                idbMonthlyTasks.set(monthId, updatedMonth).then(() => {
-                    this.updateMonths();
-                });;
-            });
         });
     }
 
@@ -162,7 +170,7 @@ export class MonthlyTasksDataService {
         return idbMonthlyTasks.get(monthId).then((month: Month) => {
             let monthlyTasks: MonthlyTask[] = month.monthlyTasks;
             if (monthlyTasks.length > 0) {
-                lastMonthlyTaskId = monthlyTasks.length-1;
+                lastMonthlyTaskId = monthlyTasks[monthlyTasks.length-1].id;
                 newMonthlyTaskId = ++lastMonthlyTaskId;
             }
             return newMonthlyTaskId;
@@ -171,11 +179,23 @@ export class MonthlyTasksDataService {
 
     changeMonthlyTaskCompletion(monthId: number, taskId: number) {
         idbMonthlyTasks.get(monthId).then((month: Month) => {
-            month.monthlyTasks[taskId].complete = !month.monthlyTasks[taskId].complete;
+            let taskKey = this.getMonthlyTaskArrayKey(month.monthlyTasks, taskId);
+            month.monthlyTasks[taskKey].complete = !month.monthlyTasks[taskKey].complete;
+            
             idbMonthlyTasks.set(monthId, month).then(() => {
                 this.updateMonths();
             });;
         });
+    }
+
+    getMonthlyTaskArrayKey(tasks: MonthlyTask[], taskId: number) {
+        let arrayKey = 0;
+        for (let task of tasks) {
+            if (task.id === taskId) {
+                return arrayKey;
+            }
+            arrayKey++;
+        }
     }
 
     getMonthlyTaskTitle(monthId: number, monthlyTaskId: number) {
@@ -193,18 +213,16 @@ export class MonthlyTasksDataService {
         }
     }
 
-    addMissingMonth() {
+    addMissingMonth(months: Month[]) {
         let currentMonthStart: Date = this.dateFunctions.getMonthStartDate();
         let currentMonth: Month = new Month({monthStart: currentMonthStart, monthlyTasks: []});
 
-        if (this.months.length === 0) {
+        if (!months) {
             this.addMonth(currentMonth);
         } else {
-            for (let month of this.months) {
-                if (!this.currentMonthExists(this.months)) {
-                    this.addMonth(currentMonth);
-                }
-            } 
+            if (!this.currentMonthExists(this.months)) {
+                this.addMonth(currentMonth);
+            }
         }
     }
 
@@ -212,7 +230,7 @@ export class MonthlyTasksDataService {
         let currentMonthStartDate = this.dateFunctions.getMonthStartDate();
         for (let month of months) {
             if (this.dateFunctions.areTasksDatesEqual(currentMonthStartDate, month.monthStart)) {
-                return true
+                return true;
             }
         }
         return false;
@@ -230,8 +248,10 @@ export class MonthlyTasksDataService {
         let shownMonthTasks: MonthlyTask[] = [];
         for (let month of this.months) {
             if (this.dateFunctions.areTasksDatesEqual(shownMonthStart, month.monthStart)) {
-                for (let task of month.monthlyTasks) {
-                    shownMonthTasks.push(task);
+                if (month.monthlyTasks) {
+                    for (let task of month.monthlyTasks) {
+                        shownMonthTasks.push(task);
+                    }
                 }
             }
         }

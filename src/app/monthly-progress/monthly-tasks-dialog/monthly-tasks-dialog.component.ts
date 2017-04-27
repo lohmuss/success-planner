@@ -23,9 +23,8 @@ export class MonthlyTasksDialogComponent implements OnInit {
         this.getEditableMonthlyTaskTitle();
     }
 
-    addTask() {
+    addTask(monthId: number) {
         let shownMonth = this.dateFunctions.getMonthStartDate();
-        let monthId = this._monthlyTasksDataService.getShownMonth(shownMonth).id;
         let newMonthlyTask = new MonthlyTask({title: this.taskTitle});
         this._monthlyTasksDataService.addMonthlyTask(monthId, newMonthlyTask);
         this.dialogRef.close();

@@ -34,8 +34,8 @@ export class MonthlyTasksListComponent implements OnInit {
     ngOnInit() {
         this._monthlyTasksDataService.monthsSource.subscribe((months: Month[]) => {
             this.months = months;
-            this._monthlyTasksDataService.addMissingMonth();
             this.setMonthsStarts();
+            this._monthlyTasksDataService.addMissingMonth(months);
             this.updateShownTasksAndDates();
         });
         this._monthlyTasksDataService.monthlyTasksSource.subscribe((monthlyTasks: MonthlyTask[]) => {
@@ -45,19 +45,31 @@ export class MonthlyTasksListComponent implements OnInit {
 
     openNewMonthlyTaskDialog() {
         let config = new MdDialogConfig();
-        config.data = {"isNewTask": true};
+        config.data = {"isNewTask": true, "monthId": this.shownMonth.id};
 
         let dialogRef = this.dialog.open(MonthlyTasksDialogComponent, config); 
     }
 
     setMonthsStarts() {
         for (let month of this.months) {
-            let monthStart: Date = month.monthStart;
-            if (this.isMonthStartUnique(monthStart)) {
-                this.monthStarts.push(monthStart);
-            }
+            this.addMonthStart(month);
         }
-        this.monthStarts.sort();
+        this.sortMonthStarts();
+    }
+
+    addMonthStart(month: Month) {
+        let monthStart: Date = month.monthStart;
+        if (this.isMonthStartUnique(monthStart)) {
+            this.monthStarts.push(monthStart);
+        }
+    }
+
+    sortMonthStarts() {
+        this.monthStarts.sort(function(firstDate, secondDate) {
+            if (firstDate>secondDate) return 1;
+            else if (firstDate<secondDate) return -1;
+            else return 0;
+        });
     }
 
     isMonthStartUnique(monthStart: Date): boolean {
