@@ -1,0 +1,19 @@
+<md-card>
+    <md-card-title>Monthly Stats</md-card-title>
+    <md-card-content>
+        <md-list>
+            <h3>Daily Tasks</h3>
+            <md-list-item>
+                <span md-list-avatar>{{ completedDailyTasks }} / {{ dailyTasksCount }}</span>
+                <md-progress-bar md-line
+                    color="primary"
+                    [value]="completedTasksPerchentage">
+                </md-progress-bar>
+            </md-list-item>
+        </md-list>
+        <md-list>
+            <h3>Habits</h3>
+            <monthly-stats-habits-item *ngFor="let habit of habits" [habit]="habit"></monthly-stats-habits-item>
+        </md-list>
+    </md-card-content>
+</md-card>

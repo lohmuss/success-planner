@@ -1,0 +1,16 @@
+md-card {
+    margin: 25px;
+}
+
+md-card-title {
+    color: #00BCD4;
+}
+
+h3 {
+    color: #00BCD4;
+    font-weight: 100;
+}
+
+span {
+    height: initial !important;
+}

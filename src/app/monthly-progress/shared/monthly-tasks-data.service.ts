@@ -60,15 +60,26 @@ const idbMonthlyTasks = {
 export class MonthlyTasksDataService {
     dateFunctions = new DateFunctions();
 
+    shownMonthDate: Date;
     months: Month[];
     monthlyTasks: MonthlyTask[];
     editableMonthlyTaskTitle: string;
 
+    shownMonthDateSource: Subject<Date> = new Subject<Date>();
     monthsSource: Subject<Month[]> = new Subject<Month[]>();
     monthlyTasksSource: Subject<MonthlyTask[]> = new Subject<MonthlyTask[]>();
     editableMonthlyTaskTitleSource: Subject<string> = new Subject<string>();
 
     constructor() {}
+
+    setShownMonthDate(monthDate: Date) {
+        this.shownMonthDate = monthDate;
+        this.shownMonthDateSource.next(monthDate);
+    }
+    
+    getShownMonthDate(): Observable<Date> {
+        return this.shownMonthDateSource.asObservable();
+    }
 
     setMonths(months: Month[]) {
         this.months = months;

@@ -32,6 +32,9 @@ export class MonthlyTasksListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this._monthlyTasksDataService.shownMonthDateSource.subscribe((shownMonthDate: Date) => {
+            this.shownMonthDate = shownMonthDate;
+        });
         this._monthlyTasksDataService.monthsSource.subscribe((months: Month[]) => {
             this.months = months;
             this.setMonthsStarts();
@@ -82,12 +85,12 @@ export class MonthlyTasksListComponent implements OnInit {
     }
 
     changeToPreviousMonth() {
-        this.shownMonthDate = this.previousMonthDate;
+        this._monthlyTasksDataService.setShownMonthDate(this.previousMonthDate);
         this.updateShownTasksAndDates();
     }
 
     changeToNextMonth() {
-        this.shownMonthDate = this.nextMonthDate;
+        this._monthlyTasksDataService.setShownMonthDate(this.nextMonthDate);
         this.updateShownTasksAndDates();
     }
 
