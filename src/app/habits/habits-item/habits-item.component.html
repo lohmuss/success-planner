@@ -11,8 +11,8 @@
             </tr>
             <tr>
             <td *ngFor="let day of shownWeek.days; let dayIndex = index">
-                <md-icon mat-list-avatar *ngIf="!day" (click)="changeHabitCompletion(habit.id, dayIndex, shownWeek)">check_box_outline_blank</md-icon>
-                <md-icon mat-list-avatar *ngIf="day" (click)="changeHabitCompletion(habit.id, dayIndex, shownWeek)">check_box</md-icon>
+                <md-icon mat-list-avatar *ngIf="!day.completion" (click)="changeHabitCompletion(habit.id, dayIndex, shownWeek)">check_box_outline_blank</md-icon>
+                <md-icon mat-list-avatar *ngIf="day.completion" (click)="changeHabitCompletion(habit.id, dayIndex, shownWeek)">check_box</md-icon>
             </td>
             </tr>
         </table>

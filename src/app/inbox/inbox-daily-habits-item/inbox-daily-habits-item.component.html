@@ -1,6 +1,6 @@
 <md-list-item [ngClass]="{'habit-border': !lastHabit}">
-    <md-icon mat-list-avatar *ngIf="!shownWeek.days[shownDay]" (click)="changeHabitCompletion(habit.id, shownDay, shownWeek)">check_box_outline_blank</md-icon>
-    <md-icon mat-list-avatar *ngIf="shownWeek.days[shownDay]" (click)="changeHabitCompletion(habit.id, shownDay, shownWeek)">check_box</md-icon>
+    <md-icon mat-list-avatar *ngIf="!shownWeek.days[shownDay].completion" (click)="changeHabitCompletion(habit.id, shownDay, shownWeek)">check_box_outline_blank</md-icon>
+    <md-icon mat-list-avatar *ngIf="shownWeek.days[shownDay].completion" (click)="changeHabitCompletion(habit.id, shownDay, shownWeek)">check_box</md-icon>
     <h4 md-line>{{ habit.title }}</h4>
 </md-list-item>
 

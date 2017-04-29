@@ -19,11 +19,11 @@ export class DateFunctions {
         return false;
     }
 
-    isTaskFromGivenMonth(monthDate: Date, taskDate: Date): boolean {
-        if (monthDate.getFullYear() != taskDate.getFullYear()) {
+    isFromGivenMonth(monthDate: Date, secondDate: Date): boolean {
+        if (monthDate.getFullYear() != secondDate.getFullYear()) {
             return false;
         }
-        if (monthDate.getMonth() != taskDate.getMonth()) {
+        if (monthDate.getMonth() != secondDate.getMonth()) {
             return false;
         }
         return true;

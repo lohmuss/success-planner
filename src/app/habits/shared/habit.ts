@@ -10,21 +10,28 @@ export class Habit {
 
 export class HabitWeek {
     weekStart: Date;
-    days: boolean[] = [];
+    days: HabitDay[] = [];
 
     constructor(values: Object = {}) {
-        this.addDays();
+        this.addDays(values["weekStart"]);
         Object.assign(this, values);
     }
 
-    addDays() {
-        let monday: boolean = false;
-        let tuesday: boolean = false;
-        let wednesday: boolean = false;
-        let thursday: boolean = false;
-        let friday: boolean = false;
-        let sathurday: boolean = false;
-        let sunday: boolean = false;
-        this.days.push(monday, tuesday, wednesday, thursday, friday, sathurday, sunday);
+    addDays(weekStart: Date) {
+        for (let days = 0; days < 7; days++) {
+            let date: Date = new Date();
+            date.setDate(weekStart.getDate() + days);
+            let day: HabitDay = new HabitDay({"date": date, "completion": false});
+            this.days.push(day);
+        }
+    }
+}
+
+export class HabitDay {
+    date: Date;
+    completion: boolean = false;
+
+    constructor(values: Object = {}) {
+        Object.assign(this, values);
     }
 }

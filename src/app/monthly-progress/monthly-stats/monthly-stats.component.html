@@ -13,7 +13,7 @@
         </md-list>
         <md-list>
             <h3>Habits</h3>
-            <monthly-stats-habits-item *ngFor="let habit of habits" [habit]="habit"></monthly-stats-habits-item>
+            <monthly-stats-habits-item *ngFor="let habit of habits" [habit]="habit"  [shownMonthDate]="shownMonthDate"></monthly-stats-habits-item>
         </md-list>
     </md-card-content>
 </md-card>

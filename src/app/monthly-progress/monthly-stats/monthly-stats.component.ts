@@ -39,8 +39,8 @@ export class MonthlyStatsComponent implements OnInit {
             this.getMonthlyDailyTasksStats();
         });
         this._dailyTasksDataService.sortedDailyTasksSource.subscribe((sortedTasks: DailyTask[][]) => {
-            let tasks: DailyTask[] = this.getTasksFromSortedTasks(sortedTasks);
-            this.shownMonthDailyTasks = this.getGivenMonthDailyTasks(tasks);
+            this.getTasksFromSortedTasks(sortedTasks);
+            this.shownMonthDailyTasks = this.getGivenMonthDailyTasks(this.dailyTasks);
             this.getMonthlyDailyTasksStats();
         });
         this._habitsDataService.habitsSource.subscribe((habits: Habit[]) => {
@@ -55,7 +55,6 @@ export class MonthlyStatsComponent implements OnInit {
         tasks = tasks.concat(sortedTasks["tomorrowsTasks"]);
         tasks = tasks.concat(sortedTasks["laterTasks"]);
         this.dailyTasks = tasks;
-        return tasks;
     }
 
     getMonthlyDailyTasksStats() {
@@ -72,7 +71,7 @@ export class MonthlyStatsComponent implements OnInit {
     getGivenMonthDailyTasks(dailyTasks: DailyTask[]): DailyTask[] {
         let shownMonthDailyTasks: DailyTask[] = [];
         for (let task of dailyTasks) {
-            if (this.dateFunctions.isTaskFromGivenMonth(this.shownMonthDate, new Date(task.date))) {
+            if (this.dateFunctions.isFromGivenMonth(this.shownMonthDate, new Date(task.date))) {
                 shownMonthDailyTasks.push(task);
             }
         }

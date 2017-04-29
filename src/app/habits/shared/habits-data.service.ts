@@ -147,7 +147,7 @@ export class HabitsDataService {
     changeHabitCompletion(habitId: number, dayId: number, shownWeek: HabitWeek) {
         idbHabits.get(habitId).then((habit: Habit) => {
             let changableWeekId = this.getShownHabitWeekId(habit, shownWeek);
-            habit.weeks[changableWeekId].days[dayId] = !habit.weeks[changableWeekId].days[dayId];
+            habit.weeks[changableWeekId].days[dayId].completion = !habit.weeks[changableWeekId].days[dayId].completion;
             idbHabits.set(habitId, habit).then(() => {
                 this.updateHabits();
             });;
