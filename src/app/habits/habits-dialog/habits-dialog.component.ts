@@ -26,18 +26,22 @@ export class HabitsDialogComponent implements OnInit {
     }
 
     addHabit() {
-        let weekStart: Date = this.dateFunctions.getWeekStartDate();
-        let newHabitWeeks: HabitWeek[] = [];
-        newHabitWeeks.push(new HabitWeek({ weekStart: weekStart }));
-        let newHabit = new Habit({title: this.habitTitle,  weeks: newHabitWeeks});
-        this._habitsDataService.addHabit(newHabit);
-        this.dialogRef.close();
+        if (!this.isEmptyOrJustSpaces(this.habitTitle)) {
+            let weekStart: Date = this.dateFunctions.getWeekStartDate();
+            let newHabitWeeks: HabitWeek[] = [];
+            newHabitWeeks.push(new HabitWeek({ weekStart: weekStart }));
+            let newHabit = new Habit({title: this.habitTitle,  weeks: newHabitWeeks});
+            this._habitsDataService.addHabit(newHabit);
+            this.dialogRef.close();
+        }
     }
 
     editHabit(habitId: number) {
-        let updatedHabit = new Habit({ id: habitId, title: this.habitTitle, weeks: this.habitWeeks });
-        this._habitsDataService.editHabit(habitId, updatedHabit);
-        this.dialogRef.close();
+        if (!this.isEmptyOrJustSpaces(this.habitTitle)) {
+            let updatedHabit = new Habit({ id: habitId, title: this.habitTitle, weeks: this.habitWeeks });
+            this._habitsDataService.editHabit(habitId, updatedHabit);
+            this.dialogRef.close();
+        }
     }
 
     removeHabit(habitId: number) {
@@ -61,5 +65,9 @@ export class HabitsDialogComponent implements OnInit {
                 this.habitWeeks = habitWeeks;
             });
         }
+    }
+
+    isEmptyOrJustSpaces(title: string){
+        return title === null || title.match(/^ *$/) !== null;
     }
 }

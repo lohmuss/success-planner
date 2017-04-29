@@ -24,15 +24,19 @@ export class DailyTasksDialogComponent implements OnInit {
     }
     
     addTask() {
-        let newTask = new DailyTask({title: this.taskTitle, date: this.taskDate, complete: false});
-        this._dailyTasksDataService.addDailyTask(newTask);
-        this.dialogRef.close();
+        if (!this.isEmptyOrJustSpaces(this.taskTitle)) {
+            let newTask = new DailyTask({title: this.taskTitle, date: this.taskDate, complete: false});
+            this._dailyTasksDataService.addDailyTask(newTask);
+            this.dialogRef.close();
+        }
     }
 
     editTask(dailyTaskId: number) {
-        let updatedTask = new DailyTask({id:dailyTaskId, title: this.taskTitle, date: this.taskDate});
-        this._dailyTasksDataService.editDailyTask(dailyTaskId, updatedTask);
-        this.dialogRef.close();
+        if (!this.isEmptyOrJustSpaces(this.taskTitle)) {
+            let updatedTask = new DailyTask({id:dailyTaskId, title: this.taskTitle, date: this.taskDate});
+            this._dailyTasksDataService.editDailyTask(dailyTaskId, updatedTask);
+            this.dialogRef.close();
+        }
     }
 
     removeTask(dailyTaskId: number) {
@@ -58,4 +62,7 @@ export class DailyTasksDialogComponent implements OnInit {
         }
     }
 
+    isEmptyOrJustSpaces(title: string){
+        return title === null || title.match(/^ *$/) !== null;
+    }
 }

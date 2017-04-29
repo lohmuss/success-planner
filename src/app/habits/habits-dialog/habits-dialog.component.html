@@ -4,7 +4,8 @@
     </md-toolbar>
     <div md-dialog-content>
         <md-input-container>
-            <input mdInput placeholder="Habit Title" type="text" name="habitTitle" [(ngModel)]="habitTitle">
+            <input mdInput placeholder="Habit Title" type="text" name="habitTitle" [(ngModel)]="habitTitle" required>
+            <md-error>This field is required</md-error>
         </md-input-container>
     </div>
     <div md-dialog-actions>
@@ -18,7 +19,8 @@
     </md-toolbar>
     <div md-dialog-content>
          <md-input-container>
-            <input mdInput placeholder="Habit Title" type="text" name="habitTitle" [(ngModel)]="habitTitle">
+            <input mdInput placeholder="Habit Title" type="text" name="habitTitle" [(ngModel)]="habitTitle" required>
+            <md-error>This field is required</md-error>
         </md-input-container>
     </div>
     <div md-dialog-actions>

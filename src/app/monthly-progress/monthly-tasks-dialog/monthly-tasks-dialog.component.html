@@ -5,7 +5,8 @@
     <table md-dialog-content>
         <tr>
             <md-input-container>
-                <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
+                <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle" required>
+                <md-error>This field is required</md-error>
             </md-input-container>
         </tr>
     </table>
@@ -21,7 +22,8 @@
     <table md-dialog-content>
         <tr>
             <md-input-container>
-                <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle">
+                <input mdInput placeholder="Task Title" type="text" name="taskTitle" [(ngModel)]="taskTitle" required>
+                <md-error>This field is required</md-error>
             </md-input-container>
         </tr>
     </table>
