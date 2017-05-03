@@ -31,12 +31,23 @@ export class DailyTasksListComponent implements OnInit {
 
     ngOnInit() {
         this._dailyTasksDataService.sortedDailyTasksSource.subscribe((sortedTasks: DailyTask[][]) => {
-            this.overdueTasks = sortedTasks["overdueTasks"];
+            this.overdueTasks = this.removeCompletedTasks(sortedTasks["overdueTasks"]);
             this.todaysTasks = sortedTasks["todaysTasks"];
             this.tomorrowsTasks = sortedTasks["tomorrowsTasks"];
             this.laterTasks = sortedTasks["laterTasks"];
-            this.withoutDateTasks = sortedTasks["withoutDateTasks"];
+            this.withoutDateTasks = this.removeCompletedTasks(sortedTasks["withoutDateTasks"]);
         });
+    }
+
+    removeCompletedTasks(tasks: DailyTask[]) {
+        let taskIndex: number = 0;
+        let unCompletedTasks: DailyTask[] = [];
+        for (let task of tasks) {
+            if (!task.complete) {
+                unCompletedTasks.push(task);
+            }
+        }
+        return unCompletedTasks;
     }
 
     openNewDailyTaskDialog() {

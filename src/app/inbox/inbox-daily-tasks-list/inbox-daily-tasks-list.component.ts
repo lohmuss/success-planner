@@ -21,8 +21,19 @@ export class InboxDailyTasksListComponent implements OnInit {
 
     ngOnInit() {
         this._dailyTasksDataService.sortedDailyTasksSource.subscribe((sortedTasks: DailyTask[][]) => {
-            this.overdueTasks = sortedTasks["overdueTasks"];
+            this.overdueTasks = this.removeCompletedTasks(sortedTasks["overdueTasks"]);
             this.todaysTasks = sortedTasks["todaysTasks"];
         });
+    }
+
+    removeCompletedTasks(tasks: DailyTask[]) {
+        let taskIndex: number = 0;
+        let unCompletedTasks: DailyTask[] = [];
+        for (let task of tasks) {
+            if (!task.complete) {
+                unCompletedTasks.push(task);
+            }
+        }
+        return unCompletedTasks;
     }
 }

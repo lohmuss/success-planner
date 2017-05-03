@@ -55,6 +55,13 @@ export class MonthlyTasksDialogComponent implements OnInit {
     }
 
     isEmptyOrJustSpaces(title: string){
-        return title === null || title.match(/^ *$/) !== null;
+        if (title === null) {
+            return true;
+        } else {
+            if (title.match(/^ *$/) !== null) {
+                return true;
+            }
+        }
+        return false;
     }
 }
