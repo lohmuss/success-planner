@@ -12,6 +12,7 @@ import { MonthlyTasksItemComponent } from '../monthly-tasks-item/monthly-tasks-i
 import { MonthlyStatsComponent } from '../monthly-stats/monthly-stats.component';
 import { MonthlyStatsHabitsItemComponent } from '../monthly-stats-habits-item/monthly-stats-habits-item.component';
 import { MonthlyNotificationComponent } from '../monthly-notification/monthly-notification.component';
+import { PushNotificationComponent } from '../../shared/ng2-notifications';
 
 import { MonthlyTasksDataService } from '../shared/monthly-tasks-data.service';
 import { DailyTasksDataService } from '../../daily-tasks/shared/daily-tasks-data.service';
@@ -35,7 +36,8 @@ import { HabitsDataService } from '../../habits/shared/habits-data.service';
         MonthlyTasksItemComponent,
         MonthlyStatsComponent,
         MonthlyStatsHabitsItemComponent,
-        MonthlyNotificationComponent
+        MonthlyNotificationComponent,
+        PushNotificationComponent
     ],
     providers: 
     [
