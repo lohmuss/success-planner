@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { MonthlyTask, Month } from './monthly-task';
 import { DateFunctions } from '../../shared/date-functions';
+import { MonthlyNotificationComponent } from '../monthly-notification/monthly-notification.component';
 
 let idb = require("idb");
 
@@ -58,6 +59,7 @@ const idbMonthlyTasks = {
 
 @Injectable()
 export class MonthlyTasksDataService {
+    monthlyNotification = new MonthlyNotificationComponent;
     dateFunctions = new DateFunctions();
 
     shownMonthDate: Date;
@@ -230,9 +232,11 @@ export class MonthlyTasksDataService {
 
         if (!months) {
             this.addMonth(currentMonth);
+            this.monthlyNotification.showNotification();
         } else {
-            if (!this.currentMonthExists(this.months)) {
+            if (!this.currentMonthExists(months)) {
                 this.addMonth(currentMonth);
+                this.monthlyNotification.showNotification();
             }
         }
     }

@@ -28,17 +28,17 @@ export class MonthlyTasksListComponent implements OnInit {
                 public dialog: MdDialog) {
         this._sidenavTitleService.setTitle("Monthly Progress");
         this.shownMonthDate = this.dateFunctions.getMonthStartDate();
-        this._monthlyTasksDataService.updateMonths();
     }
 
     ngOnInit() {
+        this._monthlyTasksDataService.updateMonths();
         this._monthlyTasksDataService.shownMonthDateSource.subscribe((shownMonthDate: Date) => {
             this.shownMonthDate = shownMonthDate;
         });
         this._monthlyTasksDataService.monthsSource.subscribe((months: Month[]) => {
             this.months = months;
-            this.setMonthsStarts();
             this._monthlyTasksDataService.addMissingMonth(months);
+            this.setMonthsStarts();
             this.updateShownTasksAndDates();
         });
         this._monthlyTasksDataService.monthlyTasksSource.subscribe((monthlyTasks: MonthlyTask[]) => {
