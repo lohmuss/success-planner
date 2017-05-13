@@ -197,6 +197,7 @@ export class DailyTasksDataService {
     }
 
     sortTasks(dailyTasks: DailyTask[]) {
+        let sortedTasks: DailyTask[][] = [];
         let todaysDate = this.dateFunctions.getTodaysDate();
         let tomorrowsDate = this.dateFunctions.getTomorrowsDate();
         this.emptySortedTasks();
@@ -225,12 +226,16 @@ export class DailyTasksDataService {
         }
     }
 
-    addSortedTasks() {
+    addSortedTasks(dailyTasks: DailyTask[]) {
+        this.sortTasks(dailyTasks);
+
         this.sortedDailyTasks["overdueTasks"] = this.overdueTasks;
         this.sortedDailyTasks["todaysTasks"] = this.todaysTasks;
         this.sortedDailyTasks["tomorrowsTasks"] = this.tomorrowsTasks;
         this.sortedDailyTasks["laterTasks"] = this.laterTasks;
         this.sortedDailyTasks["withoutDateTasks"] = this.withoutDateTasks;
+
+        return this.sortedDailyTasks;
     }
 
     emptySortedTasks() {
@@ -243,8 +248,7 @@ export class DailyTasksDataService {
 
     updateDailyTasks() {
         idbDailyTasks.getAll().then((dailyTasks: DailyTask[]) => {
-            this.sortTasks(dailyTasks);
-            this.addSortedTasks();
+            this.addSortedTasks(dailyTasks);
             this.setSortedDailyTasks(this.sortedDailyTasks);
         });
     }
