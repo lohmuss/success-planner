@@ -2,7 +2,7 @@ import { DailyTasksDataService } from './daily-tasks-data.service';
 import { DailyTask } from './daily-task';
 import { DateFunctions } from '../../shared/date-functions';
 
-describe("DailyTasksDialogComponent", () => {
+describe("DailyTasksDataService", () => {
     let service = new DailyTasksDataService();
     let dateFunctions = new DateFunctions();
 

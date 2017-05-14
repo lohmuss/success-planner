@@ -10,10 +10,12 @@ module.exports = function (config) {
       require('karma-coverage')
     ],
     files: [
-      'src/app/***/***/***.spec.ts'
+      'src/app/***/***/***.spec.ts',
+      'src/app/***//***.spec.ts'
     ],
     preprocessors: {
-      'src/app/***/***/***.spec.ts': ['@angular/cli']
+      'src/app/***/***/***.spec.ts': ['@angular/cli'],
+      'src/app/***/***.spec.ts': ['@angular/cli']
     },
     mime: {
       'text/x-typescript': ['ts','tsx']
