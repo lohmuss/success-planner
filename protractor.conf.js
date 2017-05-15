@@ -2,12 +2,12 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 /*global jasmine */
-var SpecReporter = require('jasmine-spec-reporter');
+let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
-    './e2e/**/*.e2e-spec.ts'
+    'e2e/***.e2e-spec.ts'
   ],
   capabilities: {
     'browserName': 'chrome'

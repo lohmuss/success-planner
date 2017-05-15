@@ -42,7 +42,7 @@ export class MonthlyStatsComponent implements OnInit {
             this.getTasksFromSortedTasks(sortedTasks);
             this.shownMonthDailyTasks = this.getGivenMonthDailyTasks(this.dailyTasks);
             this.getMonthlyDailyTasksStats();
-        });
+        }); 
         this._habitsDataService.habitsSource.subscribe((habits: Habit[]) => {
             this.habits = habits;
         });

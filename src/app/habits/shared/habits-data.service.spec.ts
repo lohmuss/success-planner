@@ -9,7 +9,7 @@ describe("HabitsDataService", () => {
     let thisWeekHabit1: Habit, thisWeekHabit2: Habit, nextWeekHabit: Habit;
     let habits: Habit[] = [];
     let currentWeek: HabitWeek, nextWeek: HabitWeek;
-    let currentWeekStart: Date, nextWeekStart: Date;
+    let currentWeekStart: Date, nextWeekStart: Date = new Date();
 
     beforeAll(() => {
         thisWeekHabit1 = new Habit ({id: 1, title: "This Week Habit 1 title", weeks: []});
@@ -21,7 +21,7 @@ describe("HabitsDataService", () => {
         currentWeekStart = dateFunctions.getWeekStartDate();
         currentWeek = new HabitWeek({weekStart: currentWeekStart});
 
-        nextWeekStart = new Date(currentWeekStart.getDate()+7);
+        nextWeekStart.setDate(currentWeekStart.getDate()+7);
         nextWeek = new HabitWeek({weekStart: nextWeekStart});
     
         thisWeekHabit1.weeks.push(currentWeek);

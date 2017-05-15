@@ -3,7 +3,7 @@
         <button md-button (click)="sidenav.toggle()">
             <md-icon>menu</md-icon>
         </button>
-        <span>{{ title }}</span>
+        <span class="sidenav-title">{{ title }}</span>
     </md-toolbar>
     
     <md-sidenav #sidenav [mode]="isScreenWide() ? 'side' : 'over'" [opened]="isScreenWide()">
