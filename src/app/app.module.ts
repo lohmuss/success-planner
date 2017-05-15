@@ -27,8 +27,8 @@ import { SidenavTitleService } from './shared/sidenav-title.service';
     HabitsModule,
     DailyTasksModule,
     MonthlyProgressModule,
-    MaterialModule.forRoot(), 
-    MdDialogModule.forRoot() 
+    MaterialModule, 
+    MdDialogModule 
   ],
   declarations: 
   [ 

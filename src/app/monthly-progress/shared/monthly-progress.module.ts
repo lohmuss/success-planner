@@ -25,7 +25,7 @@ import { HabitsDataService } from '../../habits/shared/habits-data.service';
         BrowserModule, 
         FormsModule,
         BrowserAnimationsModule, 
-        MaterialModule.forRoot() 
+        MaterialModule
     ],
     exports: [],
     declarations: 
