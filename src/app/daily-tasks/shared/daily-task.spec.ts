@@ -22,7 +22,7 @@ describe("DailyTask", () => {
         expect(taskTitle).toBe("Task title");
     });
 
-    it ("should return task date as 2017 first of January", () => {
+    it ("should return task date as today's date", () => {
         let taskDate = this.task.date.getTime();
         expect(taskDate).toBe(new Date().getTime());
     });

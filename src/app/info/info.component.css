@@ -1,0 +1,12 @@
+md-card {
+    margin: 25px;
+}
+
+md-card-title {
+    color: #00BCD4;
+}
+
+a {
+    text-decoration: none;
+    color: #00BCD4;
+}

@@ -27,7 +27,6 @@ export class InboxDailyTasksListComponent implements OnInit {
     }
 
     removeCompletedTasks(tasks: DailyTask[]) {
-        let taskIndex: number = 0;
         let unCompletedTasks: DailyTask[] = [];
         for (let task of tasks) {
             if (!task.complete) {
