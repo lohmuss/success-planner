@@ -1,9 +1,10 @@
 {
   "name": "Success Planner",
   "short_name": "SuccessPlan",
+  "description": "This application helps you to set daily and monthly tasks, build new habits, and keep track of your progress in doing them.",
   "icons": [
     {
-      "src": "images/icons/icon-72.png",
+      "src": "assets/icons/icon-72.png",
       "sizes": "72x72",
       "type": "image/png"
     },
