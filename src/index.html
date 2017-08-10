@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,16 +10,6 @@
     <link rel="manifest" href="/manifest.json">
     <link href="assets/success-planner-theme.scss" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
-
-    <script>
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-            console.log('Service Worker registered');
-          }).catch(function(err) {
-            console.log('Service Worker registration failed: ', err);
-          });
-        }
-    </script>
   </head>
 
   <body style="margin:0">

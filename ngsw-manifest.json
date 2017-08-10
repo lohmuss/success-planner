@@ -1,0 +1,31 @@
+{
+    "external": {
+        "urls": [
+            {
+                "url": "https://fonts.googleapis.com/css?family=Roboto"
+            }
+        ]
+    },
+    "dynamic": {
+    },
+    "routing": {
+        "index": "/index.html",
+        "routes": {
+            "/": {
+                "prefix": false
+            },
+            "/daily-tasks": {
+                "prefix": true
+            },
+            "/monthly-progress": {
+                "prefix": true
+            },
+            "/habits": {
+                "prefix": true
+            },
+            "/info": {
+                "prefix": true
+            }
+        }
+    }
+}
