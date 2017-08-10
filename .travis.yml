@@ -13,7 +13,6 @@ before_script:
   - npm install -g firebase-tools
   - npm install --save @angular/cdk
   - npm install --save @angular/material
-  - npm install --save @angular/animations
   - npm install --save hammerjs
 
 script:
