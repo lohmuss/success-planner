@@ -1,7 +1,7 @@
 md-toolbar {
-    position: fixed;
-    top: 0;
-    left: 0;
+    margin: -24px;
+    margin-bottom: 0;
+    width: auto;
 }
 
 md-input-container {
